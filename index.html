@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinapsi — Consulenza AI per le imprese | Strategia, automazioni, compliance</title>
+  <meta name="description" content="Portiamo l'intelligenza artificiale dentro le imprese: strategia, automazioni su misura, agenti AI e compliance. Risultati misurabili, rischi sotto controllo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='2' width='8' height='8' fill='%23C8F04C'/><rect x='12' y='12' width='8' height='8' fill='%237C5CFF'/><rect x='22' y='2' width='8' height='8' fill='%23FF5A3C'/><rect x='2' y='22' width='8' height='8' fill='%23FFC845'/><rect x='22' y='22' width='8' height='8' fill='%23F5F2EA'/></svg>">
+</head>
+<body>
+
+  <!-- ═══════════ LOADER ═══════════ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__grid">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+    <p class="loader__tag">{ caricamento sistemi }</p>
+  </div>
+
+  <!-- ═══════════ CURSORE ═══════════ -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__brand" aria-label="Sinapsi — home">
+      <span class="nav__logo" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </span>
+      <span class="nav__name">SINAPSI</span>
+    </a>
+    <nav class="nav__links" aria-label="Navigazione principale">
+      <a href="#servizi">SERVIZI</a>
+      <a href="#percorsi">PERCORSI</a>
+      <a href="#tecnica">TECNOLOGIA</a>
+      <a href="#rischi">RISCHI</a>
+    </nav>
+    <div class="nav__actions">
+      <a href="#contatti" class="btn btn--lime nav__cta">PARLIAMONE <span class="btn__arrow">→</span></a>
+      <button class="nav__burger" id="burger" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- menu mobile -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__links" aria-label="Menu mobile">
+      <a href="#servizi"><em>01</em> SERVIZI</a>
+      <a href="#percorsi"><em>02</em> PERCORSI</a>
+      <a href="#tecnica"><em>03</em> TECNOLOGIA</a>
+      <a href="#rischi"><em>04</em> RISCHI</a>
+      <a href="#contatti"><em>05</em> CONTATTI</a>
+    </nav>
+    <p class="menu__foot">{ consulenza ai per le imprese }</p>
+  </div>
+
+  <main id="top">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero">
+      <div class="hero__fluid" aria-hidden="true">
+        <div class="blob blob--violet"></div>
+        <div class="blob blob--lime"></div>
+        <div class="blob blob--coral"></div>
+        <div class="blob blob--magenta"></div>
+        <div class="blob blob--blue"></div>
+        <div class="hero__veil"></div>
+      </div>
+
+      <div class="hero__squares" id="heroSquares" aria-hidden="true">
+        <span class="sq sq--1"></span>
+        <span class="sq sq--2"></span>
+        <span class="sq sq--3"></span>
+        <span class="sq sq--4"></span>
+        <span class="sq sq--5"></span>
+        <span class="sq sq--6"></span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__line"><span>Trasformiamo processi</span></span>
+        <span class="hero__line"><span>in decisioni,</span></span>
+        <span class="hero__line"><span>automazioni e</span></span>
+        <span class="hero__line"><span>sistemi intelligenti.</span></span>
+      </h1>
+
+      <div class="hero__ctas">
+        <a href="#servizi" class="btn btn--ghost">VEDI I SERVIZI <span class="btn__arrow">→</span></a>
+        <a href="#contatti" class="btn btn--dark">RICHIEDI UNA CONSULENZA <span class="btn__arrow">→</span></a>
+      </div>
+
+      <div class="hero__center">
+        <p class="hero__brandname">Sinapsi</p>
+        <p class="hero__sub">CONSULENZA AI PER LE IMPRESE</p>
+        <p class="hero__hash">#AICONCRETA</p>
+      </div>
+
+      <p class="hero__corner hero__corner--left">BRESCIA, ITALIA</p>
+      <p class="hero__corner hero__corner--right">STRATEGIA · SISTEMI · FORMAZIONE</p>
+    </section>
+
+    <!-- ═══════════ MANIFESTO ═══════════ -->
+    <section class="manifesto" id="manifesto">
+      <p class="manifesto__text" id="manifestoText">Sinapsi è uno studio di consulenza che porta l'intelligenza artificiale dentro le imprese: processi che si automatizzano, dati che diventano decisioni, persone formate per usarla davvero. Ogni progetto parte dai numeri e finisce con un risultato misurabile.</p>
+    </section>
+
+    <!-- ═══════════ CASI D'USO ═══════════ -->
+    <section class="work" id="casi">
+      <div class="section-head reveal">
+        <h2 class="section-title">Casi d'uso</h2>
+        <p class="section-tag">{ cosa possiamo costruire insieme }</p>
+      </div>
+
+      <div class="work__grid">
+        <article class="work-card reveal">
+          <div class="img-slot img-slot--wide">
+            <span class="img-slot__label">IMMAGINE · CASO 01 · 4:3</span>
+          </div>
+          <div class="work-card__meta">
+            <h3>Assistente clienti 24/7</h3>
+            <p class="work-card__sector">SERVIZI &amp; COMMERCIO</p>
+            <p class="work-card__desc">Un assistente AI che risponde a preventivi, ordini e domande frequenti — giorno e notte — e passa al team solo ciò che conta.</p>
+            <p class="work-card__kpi">→ tempi di risposta da ore a secondi</p>
+          </div>
+        </article>
+
+        <article class="work-card reveal">
+          <div class="img-slot img-slot--wide">
+            <span class="img-slot__label">IMMAGINE · CASO 02 · 4:3</span>
+          </div>
+          <div class="work-card__meta">
+            <h3>Automazione preventivi</h3>
+            <p class="work-card__sector">MANIFATTURA</p>
+            <p class="work-card__desc">Dalla richiesta del cliente al preventivo pronto: l'AI legge specifiche, disegni e listini e prepara la bozza da approvare.</p>
+            <p class="work-card__kpi">→ da 3 giorni a 20 minuti</p>
+          </div>
+        </article>
+
+        <article class="work-card reveal">
+          <div class="img-slot img-slot--wide">
+            <span class="img-slot__label">IMMAGINE · CASO 03 · 4:3</span>
+          </div>
+          <div class="work-card__meta">
+            <h3>Analisi documentale</h3>
+            <p class="work-card__sector">STUDI PROFESSIONALI</p>
+            <p class="work-card__desc">Contratti, fascicoli e normative indicizzati e interrogabili in linguaggio naturale, con fonti citate e verificabili.</p>
+            <p class="work-card__kpi">→ centinaia di ore liberate ogni anno</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ SERVIZI ═══════════ -->
+    <section class="services" id="servizi">
+      <div class="section-head section-head--dark reveal">
+        <h2 class="section-title">Servizi</h2>
+        <p class="section-tag">{ dove interveniamo }</p>
+      </div>
+
+      <div class="services__stack">
+        <article class="service-panel">
+          <div class="service-panel__inner">
+            <p class="service-panel__num">{ 01 }</p>
+            <div class="service-panel__body">
+              <h3>Strategia &amp; Adozione</h3>
+              <p>Capiamo dove l'AI crea valore nella tua azienda — e dove no. Un piano concreto, con priorità, costi e ritorni attesi, prima di scrivere una riga di codice.</p>
+            </div>
+            <ul class="service-panel__list">
+              <li>AI AUDIT DEI PROCESSI</li>
+              <li>ROADMAP DI ADOZIONE</li>
+              <li>ANALISI COSTI / BENEFICI</li>
+              <li>FORMAZIONE DEI TEAM</li>
+              <li>GOVERNANCE E LINEE GUIDA INTERNE</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="service-panel">
+          <div class="service-panel__inner">
+            <p class="service-panel__num">{ 02 }</p>
+            <div class="service-panel__body">
+              <h3>Automazioni &amp; Agenti AI</h3>
+              <p>Progettiamo e costruiamo sistemi che lavorano davvero: assistenti, agenti e automazioni integrati con gli strumenti che già usi.</p>
+            </div>
+            <ul class="service-panel__list">
+              <li>ASSISTENTI E CHATBOT SU MISURA</li>
+              <li>AUTOMAZIONE DOCUMENTALE</li>
+              <li>RAG SUI DATI AZIENDALI</li>
+              <li>INTEGRAZIONE CRM · ERP · GESTIONALI</li>
+              <li>AGENTI PER PROCESSI RIPETITIVI</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="service-panel">
+          <div class="service-panel__inner">
+            <p class="service-panel__num">{ 03 }</p>
+            <div class="service-panel__body">
+              <h3>Rischio &amp; Compliance</h3>
+              <p>L'AI in azienda si fa bene o non si fa: dati protetti, normative rispettate, errori sotto controllo. Prima che diventino un problema.</p>
+            </div>
+            <ul class="service-panel__list">
+              <li>CONFORMITÀ AI ACT E GDPR</li>
+              <li>VALUTAZIONE DEI RISCHI</li>
+              <li>SICUREZZA E RISERVATEZZA DEI DATI</li>
+              <li>MITIGAZIONE DI BIAS E ALLUCINAZIONI</li>
+              <li>AUDIT PERIODICI DEI MODELLI</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ PERCORSI ═══════════ -->
+    <section class="paths" id="percorsi">
+      <div class="section-head section-head--onlime reveal">
+        <h2 class="section-title">Scegli il tuo percorso</h2>
+        <p class="section-tag">{ parti da dove sei }</p>
+      </div>
+
+      <div class="paths__grid">
+        <a href="#contatti" class="path-card reveal">
+          <p class="path-card__num">{ 01 }</p>
+          <h3>Primo passo</h3>
+          <p class="path-card__desc">Un AI Assessment di mezza giornata: mappiamo i processi, troviamo le opportunità e ti consegniamo un report con le priorità.</p>
+          <span class="path-card__go">INIZIA QUI <span class="btn__arrow">→</span></span>
+        </a>
+        <a href="#contatti" class="path-card reveal">
+          <p class="path-card__num">{ 02 }</p>
+          <h3>Progetto su misura</h3>
+          <p class="path-card__desc">Un'automazione o un agente AI costruito end-to-end: analisi, sviluppo, integrazione, test e formazione del team.</p>
+          <span class="path-card__go">COSTRUIAMOLO <span class="btn__arrow">→</span></span>
+        </a>
+        <a href="#contatti" class="path-card reveal">
+          <p class="path-card__num">{ 03 }</p>
+          <h3>Partner continuativo</h3>
+          <p class="path-card__desc">Il tuo reparto AI esterno: evoluzione dei sistemi, nuove opportunità, formazione continua e supporto costante.</p>
+          <span class="path-card__go">AFFIANCACI <span class="btn__arrow">→</span></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════ TECNICA ═══════════ -->
+    <section class="tech" id="tecnica">
+      <div class="section-head reveal">
+        <h2 class="section-title">Sotto il cofano</h2>
+        <p class="section-tag">{ per chi vuole i dettagli tecnici }</p>
+      </div>
+
+      <div class="tech__grid">
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>modelli.md</span></div>
+          <h3>MODELLI &amp; FINE-TUNING</h3>
+          <p>GPT, Claude, Gemini, Llama: scegliamo il modello per caso d'uso, non per moda. Fine-tuning e prompt engineering dove servono, modelli piccoli dove bastano.</p>
+        </article>
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>rag.md</span></div>
+          <h3>RAG &amp; VECTOR DB</h3>
+          <p>I tuoi documenti diventano la memoria del sistema: embeddings, retrieval ibrido, re-ranking e risposte con fonti citate e verificabili.</p>
+        </article>
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>integrazioni.md</span></div>
+          <h3>INTEGRAZIONI</h3>
+          <p>API, MCP, webhook: l'AI dialoga con CRM, ERP e gestionali esistenti. Nessun "sistema parallelo" — si innesta su ciò che hai già.</p>
+        </article>
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>deploy.md</span></div>
+          <h3>ON-PREMISE VS CLOUD</h3>
+          <p>Dati sensibili? Modelli open-source sui tuoi server. Altrimenti cloud con data residency UE, crittografia e accessi tracciati.</p>
+        </article>
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>eval.md</span></div>
+          <h3>EVAL &amp; MONITORING</h3>
+          <p>Test automatici su casi reali prima del rilascio, benchmark di qualità e monitoraggio continuo in produzione. Se degrada, lo sappiamo prima di te.</p>
+        </article>
+        <article class="tech-card reveal">
+          <div class="tech-card__bar"><i></i><i></i><i></i><span>costi.md</span></div>
+          <h3>COSTI SOTTO CONTROLLO</h3>
+          <p>Stima dei consumi a token, caching, routing tra modelli e budget con soglie di allarme: il conto a fine mese non è mai una sorpresa.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ RISCHI ═══════════ -->
+    <section class="risks" id="rischi">
+      <div class="section-head section-head--dark reveal">
+        <h2 class="section-title">Parliamo chiaro:<br>i rischi esistono.</h2>
+        <p class="section-tag">{ e si gestiscono così }</p>
+      </div>
+
+      <div class="risks__grid">
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 01</p>
+          <h3>Dati e privacy</h3>
+          <p>I dati restano tuoi. Contratti chiari con i fornitori, opzione on-premise per i dati critici e zero utilizzo dei tuoi dati per addestrare modelli di terzi.</p>
+        </article>
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 02</p>
+          <h3>Allucinazioni</h3>
+          <p>Risposte con fonti citate, soglie di confidenza e supervisione umana nei passaggi critici. L'AI propone, le persone decidono.</p>
+        </article>
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 03</p>
+          <h3>Dipendenza dal fornitore</h3>
+          <p>Architetture portabili: puoi cambiare modello o provider senza rifare tutto. Il sistema è tuo, non in ostaggio.</p>
+        </article>
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 04</p>
+          <h3>Costi fuori controllo</h3>
+          <p>Budget definiti prima di partire, monitoraggio dei consumi in tempo reale e ottimizzazione continua di modelli e chiamate.</p>
+        </article>
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 05</p>
+          <h3>Compliance &amp; AI Act</h3>
+          <p>Classificazione del rischio dei sistemi, documentazione tecnica e registro degli usi: conformi al regolamento europeo dal primo giorno.</p>
+        </article>
+        <article class="risk-card reveal">
+          <p class="risk-card__label">RISCHIO 06</p>
+          <h3>Le persone</h3>
+          <p>L'AI affianca i team, non li sostituisce. Ogni progetto include formazione: chi la usa deve capirla, non subirla.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ SETTORI ═══════════ -->
+    <section class="sectors" id="settori">
+      <div class="section-head reveal">
+        <h2 class="section-title">Settori</h2>
+        <p class="section-tag">{ esperienza trasversale }</p>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>MANIFATTURA</span><i>■</i><span>LOGISTICA</span><i>■</i><span>STUDI PROFESSIONALI</span><i>■</i><span>RETAIL &amp; E-COMMERCE</span><i>■</i><span>SANITÀ PRIVATA</span><i>■</i><span>EDILIZIA</span><i>■</i><span>FINANZA</span><i>■</i><span>TURISMO</span><i>■</i>
+          <span>MANIFATTURA</span><i>■</i><span>LOGISTICA</span><i>■</i><span>STUDI PROFESSIONALI</span><i>■</i><span>RETAIL &amp; E-COMMERCE</span><i>■</i><span>SANITÀ PRIVATA</span><i>■</i><span>EDILIZIA</span><i>■</i><span>FINANZA</span><i>■</i><span>TURISMO</span><i>■</i>
+        </div>
+      </div>
+      <div class="marquee marquee--reverse" aria-hidden="true">
+        <div class="marquee__track">
+          <span>AGROALIMENTARE</span><i>■</i><span>AUTOMOTIVE</span><i>■</i><span>ENERGIA</span><i>■</i><span>IMMOBILIARE</span><i>■</i><span>ASSICURAZIONI</span><i>■</i><span>FORMAZIONE</span><i>■</i><span>TRASPORTI</span><i>■</i><span>SERVIZI B2B</span><i>■</i>
+          <span>AGROALIMENTARE</span><i>■</i><span>AUTOMOTIVE</span><i>■</i><span>ENERGIA</span><i>■</i><span>IMMOBILIARE</span><i>■</i><span>ASSICURAZIONI</span><i>■</i><span>FORMAZIONE</span><i>■</i><span>TRASPORTI</span><i>■</i><span>SERVIZI B2B</span><i>■</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PERCHÉ NOI ═══════════ -->
+    <section class="why" id="perche">
+      <div class="section-head reveal">
+        <h2 class="section-title">Perché Sinapsi</h2>
+        <p class="section-tag">{ il metodo prima della tecnologia }</p>
+      </div>
+
+      <div class="why__rows">
+        <div class="why-row reveal">
+          <p class="why-row__num">01</p>
+          <h3>Indipendenti dai vendor</h3>
+          <p>Non rivendiamo licenze: consigliamo la tecnologia giusta per il tuo caso, anche quando è la più economica.</p>
+        </div>
+        <div class="why-row reveal">
+          <p class="why-row__num">02</p>
+          <h3>Risultati misurabili</h3>
+          <p>Ogni progetto ha un KPI concordato prima di iniziare. Se non si può misurare, non lo proponiamo.</p>
+        </div>
+        <div class="why-row reveal">
+          <p class="why-row__num">03</p>
+          <h3>Dal problema, non dalla tecnologia</h3>
+          <p>Si parte dal processo e dai numeri. L'AI arriva dopo — ed è sempre al servizio del risultato.</p>
+        </div>
+        <div class="why-row reveal">
+          <p class="why-row__num">04</p>
+          <h3>Formazione inclusa</h3>
+          <p>Il tuo team impara a usare e capire ciò che costruiamo. L'obiettivo è renderti autonomo, non dipendente da noi.</p>
+        </div>
+      </div>
+
+      <div class="why__stats reveal">
+        <div class="stat">
+          <p class="stat__value">-40<em>%</em></p>
+          <p class="stat__label">TEMPO SU ATTIVITÀ RIPETITIVE — OBIETTIVO MEDIO DEI PROGETTI</p>
+        </div>
+        <div class="stat">
+          <p class="stat__value">3 <em>settimane</em></p>
+          <p class="stat__label">DAL KICKOFF AL PRIMO PROTOTIPO FUNZIONANTE</p>
+        </div>
+        <div class="stat">
+          <p class="stat__value">100<em>%</em></p>
+          <p class="stat__label">PROGETTI CON KPI DEFINITO E MISURATO</p>
+        </div>
+        <div class="stat">
+          <p class="stat__value">0</p>
+          <p class="stat__label">TUOI DATI USATI PER ADDESTRARE MODELLI DI TERZI</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ TESTIMONIANZE ═══════════ -->
+    <section class="quotes" id="testimonianze">
+      <div class="section-head section-head--dark reveal">
+        <h2 class="section-title">Dicono di noi</h2>
+        <p class="section-tag">{ testimonianze di esempio — da sostituire }</p>
+      </div>
+
+      <div class="quotes__slider reveal" id="slider">
+        <div class="quotes__viewport" id="sliderViewport">
+          <blockquote class="quote is-active">
+            <p class="quote__text">« Pensavo servisse un reparto IT intero. È bastato un processo ripensato bene: ora i preventivi escono in giornata. »</p>
+            <footer>
+              <cite>NOME COGNOME</cite>
+              <span>DIREZIONE OPERATIVA · AZIENDA MANIFATTURIERA</span>
+            </footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p class="quote__text">« Il valore vero? Ci hanno detto anche cosa NON automatizzare. Metà delle idee che avevamo non stavano in piedi. »</p>
+            <footer>
+              <cite>NOME COGNOME</cite>
+              <span>TITOLARE · STUDIO PROFESSIONALE</span>
+            </footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p class="quote__text">« Formazione concreta, zero fuffa. Il team ha smesso di avere paura dell'AI e ha iniziato a usarla ogni giorno. »</p>
+            <footer>
+              <cite>NOME COGNOME</cite>
+              <span>HR MANAGER · AZIENDA RETAIL</span>
+            </footer>
+          </blockquote>
+        </div>
+        <div class="quotes__nav">
+          <button id="quotePrev" aria-label="Testimonianza precedente">←</button>
+          <p class="quotes__count"><span id="quoteIndex">01</span> / 03</p>
+          <button id="quoteNext" aria-label="Testimonianza successiva">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ INSIGHTS ═══════════ -->
+    <section class="blog" id="insights">
+      <div class="section-head reveal">
+        <h2 class="section-title">Dal laboratorio</h2>
+        <p class="section-tag">{ idee, guide e casi in corso }</p>
+      </div>
+
+      <div class="blog__grid">
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 01 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ LUGLIO 2026 }</p>
+          <h3>AI Act: cosa cambia davvero per le PMI italiane</h3>
+          <p class="blog-card__excerpt">Scadenze, obblighi e falsi miti del regolamento europeo — spiegati senza legalese.</p>
+        </a>
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 02 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ GIUGNO 2026 }</p>
+          <h3>RAG spiegato al tuo direttore operativo</h3>
+          <p class="blog-card__excerpt">Come l'AI può rispondere usando i documenti della tua azienda — e citare le fonti.</p>
+        </a>
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 03 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ GIUGNO 2026 }</p>
+          <h3>Quanto costa (davvero) un progetto AI</h3>
+          <p class="blog-card__excerpt">Licenze, sviluppo, consumi: la struttura dei costi vera, voce per voce.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════ CTA FINALE ═══════════ -->
+    <section class="cta" id="contatti">
+      <div class="cta__fluid" aria-hidden="true">
+        <div class="blob blob--violet"></div>
+        <div class="blob blob--lime"></div>
+        <div class="blob blob--coral"></div>
+        <div class="cta__veil"></div>
+      </div>
+      <p class="cta__tag reveal">{ il primo passo è una conversazione }</p>
+      <h2 class="cta__title reveal">Pronto a portare<br>l'AI nella tua azienda?</h2>
+      <div class="cta__actions reveal">
+        <a href="mailto:info@sinapsi-ai.it" class="btn btn--lime btn--big">PRENOTA UNA CALL <span class="btn__arrow">→</span></a>
+        <a href="mailto:info@sinapsi-ai.it" class="cta__mail">info@sinapsi-ai.it</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer__top">
+      <a href="#top" class="nav__brand" aria-label="Torna su">
+        <span class="nav__logo" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+        <span class="nav__name">SINAPSI</span>
+      </a>
+      <nav class="footer__links" aria-label="Navigazione footer">
+        <a href="#servizi">SERVIZI</a>
+        <a href="#percorsi">PERCORSI</a>
+        <a href="#tecnica">TECNOLOGIA</a>
+        <a href="#rischi">RISCHI</a>
+        <a href="#contatti">CONTATTI</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span id="year">2026</span> SINAPSI — CONSULENZA AI PER LE IMPRESE</p>
+      <p>BRESCIA, ITALIA · P.IVA 00000000000</p>
+      <p>#AICONCRETA</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
