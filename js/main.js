@@ -182,6 +182,8 @@
   const heroCenter = document.querySelector('.hero__center');
   const heroCorners = document.querySelectorAll('.hero__corner');
   const panels = [...document.querySelectorAll('.service-panel')];
+  const pathsSection = document.getElementById('percorsi');
+  const deckCards = [...document.querySelectorAll('#pathsDeck .path-card')];
   const sectors = document.getElementById('settori');
   const marqueeOffs = [...document.querySelectorAll('.marquee__off')];
   const ctaSection = document.getElementById('contatti');
@@ -201,6 +203,7 @@
     const heroH = hero ? hero.offsetHeight : vh;
     const heroP = clamp(y / heroH, 0, 1);
     const panelRects = panels.map(p => p.getBoundingClientRect());
+    const pathsRect = pathsSection ? pathsSection.getBoundingClientRect() : null;
     const sectorsRect = sectors ? sectors.getBoundingClientRect() : null;
     const ctaRect = ctaSection ? ctaSection.getBoundingClientRect() : null;
 
@@ -240,6 +243,21 @@
         push = Math.min(push, 2);
         panels[i].style.setProperty('--pscale', String(1 - push * 0.04));
         panels[i].style.setProperty('--pty', `${push * -11}px`);
+      }
+
+      // percorsi: le carte volano da destra e si impilano a sinistra (pin + scrub)
+      if (pathsRect && deckCards.length) {
+        if (window.innerWidth > 760) {
+          const scrollable = Math.max(1, pathsRect.height - vh);
+          const prog = clamp(-pathsRect.top / scrollable, 0, 1);
+          deckCards.forEach((c, i) => {
+            const p = clamp((prog - i * 0.22) / 0.28, 0, 1);
+            const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
+            c.style.setProperty('--dx', `${(1 - e) * 115}vw`);
+          });
+        } else {
+          deckCards.forEach(c => c.style.setProperty('--dx', '0vw'));
+        }
       }
 
       // marquee: offset orizzontale legato allo scroll + skew da velocità

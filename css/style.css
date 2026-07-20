@@ -781,54 +781,91 @@ section { position: relative; }
   background: var(--ink);
 }
 
-/* ─────────── percorsi (blocco lime) ─────────── */
+/* ─────────── percorsi (blocco lime, pinnato: carte da destra) ───────────
+   La sezione è una pista alta 340svh; il pin sticky resta a schermo intero
+   mentre le 4 carte volano da destra e si impilano sventagliate a sinistra. */
 .paths {
+  position: relative;
   background: var(--lime);
-  padding: var(--pad-section) var(--pad-x);
   border-radius: 28px;
   margin-top: -28px;
   color: var(--ink);
   z-index: 2;
+  height: 340vh;
+  height: 340svh;
+  padding: 0;
 }
+.paths__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: 100px var(--pad-x) 36px;
+  overflow: hidden;
+}
+.paths .section-head { margin-bottom: 0; }
 .paths .section-title { color: var(--ink); }
 .paths .section-tag { color: rgba(19, 16, 25, 0.6); }
-.paths__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(18px, 2.2vw, 30px);
+.paths__deck {
+  position: relative;
+  flex: 1;
+  margin-top: clamp(20px, 4vh, 44px);
+  min-height: 280px;
 }
 .path-card {
   display: flex;
   flex-direction: column;
+  background: var(--lime);
   border: 1.5px solid var(--ink);
   border-radius: 20px;
-  padding: clamp(26px, 3vw, 40px);
-  min-height: 320px;
-  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  padding: clamp(22px, 2.2vw, 36px);
+  position: absolute;
+  width: 31%;
+  height: auto;
+  min-height: clamp(300px, 54vh, 450px);
+  top: calc(50% - clamp(150px, 27vh, 225px));
+  transform: translateX(var(--dx, 0vw)) rotate(var(--rot, 0deg));
+  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out),
+              transform 0.45s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  will-change: transform;
 }
-.path-card:hover { background: var(--ink); color: var(--lime); transform: translateY(-6px); }
-.path-card:active { transform: scale(0.98); }
+.path-card:nth-child(1) { left: 0;   --rot: -2.2deg; }
+.path-card:nth-child(2) { left: 23%; --rot: 1.6deg; }
+.path-card:nth-child(3) { left: 46%; --rot: -1.3deg; }
+.path-card:nth-child(4) { left: 69%; --rot: 2deg; }
+.path-card:hover {
+  background: var(--ink);
+  color: var(--lime);
+  transform: translateX(var(--dx, 0vw)) rotate(0deg) translateY(-12px) scale(1.05);
+  z-index: 6;
+  box-shadow: 0 30px 60px rgba(10, 8, 14, 0.35);
+}
+.path-card:active {
+  transform: translateX(var(--dx, 0vw)) rotate(0deg) translateY(-12px) scale(1.0);
+}
 .path-card__num {
   font-family: var(--font-mono);
   font-size: 13px;
   font-style: italic;
 }
 .path-card h3 {
-  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
   font-weight: 660;
   letter-spacing: -0.025em;
-  margin-top: 44px;
+  margin-top: clamp(16px, 4vh, 44px);
   line-height: 1.02;
 }
 .path-card__desc {
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 14.5px;
+  line-height: 1.5;
   margin-top: 14px;
   opacity: 0.78;
 }
 .path-card__go {
   margin-top: auto;
-  padding-top: 28px;
+  padding-top: 22px;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -1273,7 +1310,7 @@ section { position: relative; }
 
 /* ─────────── responsive ─────────── */
 @media (max-width: 1080px) {
-  .work__grid, .tech__grid, .risks__grid, .blog__grid, .paths__grid {
+  .work__grid, .tech__grid, .risks__grid, .blog__grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .service-panel__inner {
@@ -1293,7 +1330,7 @@ section { position: relative; }
   .hero__corner--right { display: none; }
   .sq { transform: scale(0.7); }
   .sq--1, .sq--6 { display: none; }
-  .work__grid, .tech__grid, .risks__grid, .blog__grid, .paths__grid {
+  .work__grid, .tech__grid, .risks__grid, .blog__grid {
     grid-template-columns: 1fr;
   }
   .why-row { grid-template-columns: 1fr; gap: 8px; }
@@ -1301,7 +1338,13 @@ section { position: relative; }
   .why__stats { gap: 28px; }
   .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
-  .path-card { min-height: 0; }
+  /* percorsi: niente pin su mobile, lista verticale normale */
+  .paths { height: auto; padding: var(--pad-section) var(--pad-x); }
+  .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
+  .paths .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
+  .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
+  .path-card { position: static; width: auto; height: auto; min-height: 0; transform: none; }
+  .path-card:hover { transform: none; }
   .path-card h3 { margin-top: 26px; }
 }
 
@@ -1334,4 +1377,9 @@ section { position: relative; }
   /* manifesto: niente pin, torna sezione normale */
   .manifesto { height: auto; padding: calc(var(--pad-section) * 1.15) var(--pad-x); }
   .manifesto__pin { position: static; height: auto; padding: 0; }
+  /* percorsi: niente pin né carte volanti */
+  .paths { height: auto; padding: var(--pad-section) var(--pad-x); }
+  .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
+  .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
+  .path-card { position: static; width: auto; height: auto; min-height: 0; transform: none !important; }
 }
