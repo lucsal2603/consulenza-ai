@@ -819,10 +819,10 @@ section { position: relative; }
   margin-top: calc(-100svh - 340px);
   color: var(--ink);
   z-index: 2;
-  /* pista allungata: le carte atterrano entro il 75% della corsa,
-     l'ultimo quarto è attesa a mazzo fermo (finta quinta carta) */
-  height: 420vh;
-  height: 420svh;
+  /* pista allungata: le carte atterrano entro il 62%, poi pausa,
+     e nell'ultimo tratto la sezione successiva sale a coprire (sipario) */
+  height: 480vh;
+  height: 480svh;
   padding: 0;
 }
 .paths__pin {
@@ -913,8 +913,13 @@ section { position: relative; }
 .tech {
   background: var(--paper);
   padding: var(--pad-section) var(--pad-x);
-  margin-top: -28px;
+  /* sipario: sale sopra il ventaglio dei percorsi (ancora agganciato)
+     e lo copre del tutto prima che il sito prosegua */
+  margin-top: calc(-100vh - 80px);
+  margin-top: calc(-100svh - 80px);
   padding-top: calc(var(--pad-section) + 28px);
+  border-radius: 28px 28px 0 0;
+  z-index: 3;
 }
 .tech__grid {
   display: grid;
@@ -1369,6 +1374,7 @@ section { position: relative; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
   /* percorsi: niente pin su mobile, lista verticale normale */
   .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
+  .tech { margin-top: -28px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
   .paths .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
   .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -1408,6 +1414,7 @@ section { position: relative; }
   .manifesto__pin { position: static; height: auto; padding: 0; }
   /* percorsi: niente pin né carte volanti */
   .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
+  .tech { margin-top: -28px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
   .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
   .path-card { position: static; width: auto; height: auto; min-height: 0; transform: none !important; }
