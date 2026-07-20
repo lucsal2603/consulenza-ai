@@ -251,7 +251,8 @@
           const scrollable = Math.max(1, pathsRect.height - vh);
           const prog = clamp(-pathsRect.top / scrollable, 0, 1);
           deckCards.forEach((c, i) => {
-            const p = clamp((prog - i * 0.22) / 0.28, 0, 1);
+            // atterraggi entro il 75% della pista: l'ultimo quarto è attesa
+            const p = clamp((prog - i * 0.17) / 0.24, 0, 1);
             const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
             c.style.setProperty('--dx', `${(1 - e) * 115}vw`);
           });
