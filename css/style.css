@@ -714,13 +714,14 @@ section { position: relative; }
   border-radius: 28px 28px 0 0;
   margin-top: -28px;
 }
-/* gap dinamico: su schermi alti il pannello successivo resta sotto la piega
-   finché non si scrolla (niente sbirciatine del verde sotto il rosso) */
+/* gap dinamico: il pannello successivo resta sotto la piega e c'è una pausa
+   (~mezzo schermo di scroll) in cui il pannello agganciato resta solo,
+   prima che il prossimo cominci a salire */
 .services__stack {
   display: flex;
   flex-direction: column;
-  gap: max(24px, calc(100vh - 560px));
-  gap: max(24px, calc(100svh - 560px));
+  gap: max(24px, calc(160vh - 560px));
+  gap: max(24px, calc(160svh - 560px));
 }
 .service-panel {
   position: sticky;
