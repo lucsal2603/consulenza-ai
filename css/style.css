@@ -723,6 +723,16 @@ section { position: relative; }
   gap: max(24px, calc(160vh - 560px));
   gap: max(24px, calc(160svh - 560px));
 }
+/* coda di attesa: quando il viola è atterrato, il mazzo resta agganciato
+   ancora per un tratto (come se stesse arrivando una quarta carta),
+   poi la pagina riparte */
+.services__stack::after {
+  content: "";
+  display: block;
+  flex: none;
+  height: 30vh;
+  height: 30svh;
+}
 .service-panel {
   position: sticky;
   width: 100%;
