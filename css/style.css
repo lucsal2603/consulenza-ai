@@ -730,15 +730,15 @@ section { position: relative; }
   gap: max(24px, calc(160vh - 560px));
   gap: max(24px, calc(160svh - 560px));
 }
-/* coda di attesa: quando il viola è atterrato, il mazzo resta agganciato
-   ancora per un tratto (come se stesse arrivando una quarta carta),
-   poi la pagina riparte */
+/* coda di attesa + copertura: quando il viola è atterrato il mazzo resta
+   agganciato per una pausa, poi la sezione successiva gli sale sopra
+   coprendolo (sipario) mentre lui resta fermo */
 .services__stack::after {
   content: "";
   display: block;
   flex: none;
-  height: 30vh;
-  height: 30svh;
+  height: 100vh;
+  height: 100svh;
 }
 .service-panel {
   position: sticky;
@@ -813,7 +813,10 @@ section { position: relative; }
   position: relative;
   background: var(--lime);
   border-radius: 28px;
-  margin-top: -28px;
+  /* sipario: sale sopra il mazzo dei servizi (ancora agganciato)
+     e copre il pannello viola prima che il sito prosegua */
+  margin-top: calc(-100vh - 340px);
+  margin-top: calc(-100svh - 340px);
   color: var(--ink);
   z-index: 2;
   /* pista allungata: le carte atterrano entro il 75% della corsa,
@@ -1365,7 +1368,7 @@ section { position: relative; }
   .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
   /* percorsi: niente pin su mobile, lista verticale normale */
-  .paths { height: auto; padding: var(--pad-section) var(--pad-x); }
+  .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
   .paths .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
   .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -1404,7 +1407,7 @@ section { position: relative; }
   .manifesto { height: auto; padding: calc(var(--pad-section) * 1.15) var(--pad-x); }
   .manifesto__pin { position: static; height: auto; padding: 0; }
   /* percorsi: niente pin né carte volanti */
-  .paths { height: auto; padding: var(--pad-section) var(--pad-x); }
+  .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
   .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
   .path-card { position: static; width: auto; height: auto; min-height: 0; transform: none !important; }
