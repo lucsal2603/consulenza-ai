@@ -228,14 +228,18 @@
         heroCorners.forEach(c => { c.style.opacity = String(clamp(0.55 - heroP * 1.2, 0, 1)); });
       }
 
-      // pannelli servizi: il precedente scala/si attenua mentre il successivo lo copre
-      for (let i = 0; i < panels.length - 1; i++) {
-        const mine = panelRects[i];
-        const next = panelRects[i + 1];
-        const cover = clamp((mine.bottom - next.top) / mine.height, 0, 1);
-        panels[i].style.setProperty('--pscale', String(1 - cover * 0.05));
-        panels[i].style.setProperty('--pty', `${cover * -8}px`);
-        panels[i].style.setProperty('--pop', String(1 - cover * 0.45));
+      // pannelli servizi — mazzo di carte: ogni carta che arriva si mette davanti
+      // e spinge TUTTE le precedenti (la terza sposta la seconda e la prima)
+      const covers = panels.map((p, i) => {
+        if (i === 0) return 0;
+        return clamp((panelRects[i - 1].bottom - panelRects[i].top) / panelRects[i - 1].height, 0, 1);
+      });
+      for (let i = 0; i < panels.length; i++) {
+        let push = 0;
+        for (let j = i + 1; j < panels.length; j++) push += covers[j];
+        push = Math.min(push, 2);
+        panels[i].style.setProperty('--pscale', String(1 - push * 0.04));
+        panels[i].style.setProperty('--pty', `${push * -11}px`);
       }
 
       // marquee: offset orizzontale legato allo scroll + skew da velocità

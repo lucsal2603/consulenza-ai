@@ -721,15 +721,15 @@ section { position: relative; }
 }
 .service-panel {
   position: sticky;
-  background: var(--ink-2);
-  border: 1px solid rgba(239, 235, 226, 0.09);
   border-radius: 22px;
   transform: scale(var(--pscale, 1)) translateY(var(--pty, 0px));
   transform-origin: top center;
-  opacity: var(--pop, 1);
-  transition: transform 0.2s linear, opacity 0.2s linear;
-  will-change: transform, opacity;
+  box-shadow: 0 -14px 40px rgba(10, 8, 14, 0.28);
+  will-change: transform;
 }
+.service-panel--coral  { background: var(--coral); }
+.service-panel--lime   { background: var(--lime); }
+.service-panel--violet { background: var(--violet); }
 .service-panel:nth-child(1) { top: 92px; }
 .service-panel:nth-child(2) { top: 112px; }
 .service-panel:nth-child(3) { top: 132px; }
@@ -743,22 +743,21 @@ section { position: relative; }
   font-family: var(--font-mono);
   font-size: 14px;
   font-style: italic;
-  color: var(--lime);
+  font-weight: 600;
+  color: rgba(19, 16, 25, 0.85);
 }
-.service-panel:nth-child(2) .service-panel__num { color: var(--violet); }
-.service-panel:nth-child(3) .service-panel__num { color: var(--coral); }
 .service-panel__body h3 {
   font-size: clamp(1.8rem, 3.1vw, 2.7rem);
-  font-weight: 620;
+  font-weight: 660;
   letter-spacing: -0.025em;
   line-height: 1.04;
-  color: var(--bone);
+  color: var(--ink);
 }
 .service-panel__body p {
   margin-top: 18px;
   font-size: 16px;
   line-height: 1.6;
-  color: rgba(239, 235, 226, 0.66);
+  color: rgba(19, 16, 25, 0.78);
   max-width: 46ch;
 }
 .service-panel__list li {
@@ -767,21 +766,20 @@ section { position: relative; }
   gap: 12px;
   font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.1em;
-  color: rgba(239, 235, 226, 0.82);
+  color: rgba(19, 16, 25, 0.9);
   padding: 13px 0;
-  border-top: 1px solid rgba(239, 235, 226, 0.1);
+  border-top: 1px solid rgba(19, 16, 25, 0.25);
 }
-.service-panel__list li:last-child { border-bottom: 1px solid rgba(239, 235, 226, 0.1); }
+.service-panel__list li:last-child { border-bottom: 1px solid rgba(19, 16, 25, 0.25); }
 .service-panel__list li::before {
   content: "";
   width: 7px;
   height: 7px;
   flex: none;
-  background: var(--lime);
+  background: var(--ink);
 }
-.service-panel:nth-child(2) .service-panel__list li::before { background: var(--violet); }
-.service-panel:nth-child(3) .service-panel__list li::before { background: var(--coral); }
 
 /* ─────────── percorsi (blocco lime) ─────────── */
 .paths {
