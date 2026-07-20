@@ -157,12 +157,15 @@
       .join(' ');
     const spans = manifesto.querySelectorAll('.w');
 
+    const manifestoSection = document.getElementById('manifesto');
     updateManifesto = () => {
-      const rect = manifesto.getBoundingClientRect();
+      const rect = manifestoSection.getBoundingClientRect();
       const vh = window.innerHeight;
-      const total = rect.height + vh * 0.32;
-      const progress = clamp((vh * 0.78 - rect.top) / total, 0, 1);
-      const on = Math.floor(progress * spans.length);
+      // progresso dentro la pista pinnata (0 = appena bloccato, 1 = fine corsa);
+      // il fattore 1.15 completa il testo poco prima dello sblocco, per una pausa piena
+      const scrollable = Math.max(1, rect.height - vh);
+      const progress = clamp((-rect.top / scrollable) * 1.15, 0, 1);
+      const on = Math.round(progress * spans.length);
       spans.forEach((s, i) => s.classList.toggle('is-on', i < on));
     };
     if (reduceMotion) spans.forEach(s => s.classList.add('is-on'));

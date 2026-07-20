@@ -614,13 +614,28 @@ section { position: relative; }
   color: rgba(19, 16, 25, 0.38);
 }
 
-/* ─────────── manifesto ─────────── */
+/* ─────────── manifesto (sezione pinnata) ───────────
+   Il contenitore è una "pista" alta 240svh; il figlio sticky resta
+   bloccato a schermo intero mentre lo scroll scopre le parole. */
 .manifesto {
+  position: relative;
   background: var(--paper);
-  padding: calc(var(--pad-section) * 1.15) var(--pad-x);
   border-radius: 28px 28px 0 0;
   margin-top: -24px;
   z-index: 3;
+  height: 240vh;
+  height: 240svh;
+}
+.manifesto__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--pad-x);
+  overflow: hidden;
 }
 .manifesto__text {
   max-width: 1180px;
@@ -1318,4 +1333,7 @@ section { position: relative; }
   .img-slot { clip-path: none !important; transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out); }
   .service-panel { transform: none !important; opacity: 1 !important; transition: none !important; }
   .marquee__off, .cta__fluid { transform: none !important; transition: none !important; }
+  /* manifesto: niente pin, torna sezione normale */
+  .manifesto { height: auto; padding: calc(var(--pad-section) * 1.15) var(--pad-x); }
+  .manifesto__pin { position: static; height: auto; padding: 0; }
 }
