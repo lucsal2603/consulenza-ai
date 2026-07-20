@@ -1,8 +1,11 @@
 /* ═══════════════════════════════════════════════
-   SINAPSI — interazioni
+   SINAPSI — interazioni + scroll animations
+   (vanilla: solo transform/opacity, throttle 16ms,
+   letture e scritture in batch, reduced-motion ok)
    ═══════════════════════════════════════════════ */
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
   /* ── loader → entrata hero ── */
   window.addEventListener('load', () => {
@@ -13,9 +16,11 @@
 
   /* ── nav: stato scrolled ── */
   const nav = document.getElementById('nav');
-  const onScrollNav = () => nav.classList.toggle('nav--scrolled', window.scrollY > 40);
-  window.addEventListener('scroll', onScrollNav, { passive: true });
-  onScrollNav();
+
+  /* ── titoli sezione: wrap per il mask reveal ── */
+  document.querySelectorAll('.section-title, .cta__title').forEach(t => {
+    t.innerHTML = `<span class="st">${t.innerHTML}</span>`;
+  });
 
   /* ── scroll fluido verso le ancore (senza scroll-behavior CSS) ── */
   const easeScroll = (t) => 1 - Math.pow(1 - t, 4); // ease-out quart
@@ -88,8 +93,9 @@
     ring.remove();
   }
 
-  /* ── parallax quadrati hero ── */
+  /* ── parallax quadrati hero (mouse + scroll) ── */
   const squares = document.getElementById('heroSquares');
+  let sqScrollY = 0; // offset verticale legato allo scroll, letto dal loop mouse
   if (squares && finePointer && !reduceMotion) {
     let tx = 0, ty = 0, cx = 0, cy = 0;
     window.addEventListener('mousemove', (e) => {
@@ -99,11 +105,30 @@
     const drift = () => {
       cx += (tx - cx) * 0.05;
       cy += (ty - cy) * 0.05;
-      squares.style.transform = `translate(${cx}px, ${cy}px)`;
+      squares.style.transform = `translate3d(${cx}px, ${cy + sqScrollY}px, 0)`;
       requestAnimationFrame(drift);
     };
     drift();
   }
+
+  /* ── contatori statistiche ── */
+  let countersDone = false;
+  const startCounters = () => {
+    if (countersDone) return;
+    countersDone = true;
+    document.querySelectorAll('.stat__value .n').forEach(n => {
+      const to = parseInt(n.dataset.to, 10) || 0;
+      if (reduceMotion || to === 0) { n.textContent = String(to); return; }
+      const dur = 1300;
+      const t0 = performance.now();
+      const iv = setInterval(() => {
+        const p = clamp((performance.now() - t0) / dur, 0, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        n.textContent = String(Math.round(to * eased));
+        if (p >= 1) clearInterval(iv);
+      }, 28);
+    });
+  };
 
   /* ── reveal on scroll (con stagger per fratelli) ── */
   const reveals = document.querySelectorAll('.reveal');
@@ -115,6 +140,7 @@
       const idx = Math.max(0, siblings.indexOf(el));
       el.style.setProperty('--rd', `${(idx % 4) * 0.09}s`);
       el.classList.add('is-in');
+      if (el.classList.contains('why__stats')) startCounters();
       io.unobserve(el);
     });
   }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
@@ -122,6 +148,7 @@
 
   /* ── manifesto: reveal parola per parola allo scroll ── */
   const manifesto = document.getElementById('manifestoText');
+  let updateManifesto = () => {};
   if (manifesto) {
     const ACCENT = ['decisioni,', 'misurabile.', 'automatizzano,'];
     const words = manifesto.textContent.trim().split(/\s+/);
@@ -130,24 +157,120 @@
       .join(' ');
     const spans = manifesto.querySelectorAll('.w');
 
-    const updateManifesto = () => {
+    updateManifesto = () => {
       const rect = manifesto.getBoundingClientRect();
       const vh = window.innerHeight;
-      // progresso: da quando il testo entra (75% vh) a quando il suo fondo è al 45% vh
       const total = rect.height + vh * 0.32;
-      const progress = Math.min(1, Math.max(0, (vh * 0.78 - rect.top) / total));
+      const progress = clamp((vh * 0.78 - rect.top) / total, 0, 1);
       const on = Math.floor(progress * spans.length);
       spans.forEach((s, i) => s.classList.toggle('is-on', i < on));
     };
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      setTimeout(() => { updateManifesto(); ticking = false; }, 16);
-    }, { passive: true });
-    updateManifesto();
     if (reduceMotion) spans.forEach(s => s.classList.add('is-on'));
   }
+
+  /* ═══════════ SCROLL FX — motore unico (scrub) ═══════════
+     Un solo listener throttlato: prima tutte le letture di layout,
+     poi tutte le scritture (solo transform/opacity).             */
+  const progressBar = document.getElementById('progress');
+  const hero = document.querySelector('.hero');
+  const heroFluid = document.querySelector('.hero__fluid');
+  const heroTitle = document.querySelector('.hero__title');
+  const heroCtas = document.querySelector('.hero__ctas');
+  const heroCenter = document.querySelector('.hero__center');
+  const heroCorners = document.querySelectorAll('.hero__corner');
+  const panels = [...document.querySelectorAll('.service-panel')];
+  const sectors = document.getElementById('settori');
+  const marqueeOffs = [...document.querySelectorAll('.marquee__off')];
+  const ctaSection = document.getElementById('contatti');
+  const ctaFluid = document.querySelector('.cta__fluid');
+
+  let lastY = window.scrollY;
+  let skewResetTimer = null;
+
+  const scrollFX = () => {
+    /* ---- letture ---- */
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+    const docH = document.documentElement.scrollHeight;
+    const velocity = y - lastY;
+    lastY = y;
+
+    const heroH = hero ? hero.offsetHeight : vh;
+    const heroP = clamp(y / heroH, 0, 1);
+    const panelRects = panels.map(p => p.getBoundingClientRect());
+    const sectorsRect = sectors ? sectors.getBoundingClientRect() : null;
+    const ctaRect = ctaSection ? ctaSection.getBoundingClientRect() : null;
+
+    /* ---- scritture ---- */
+    // barra progresso
+    if (progressBar) {
+      progressBar.style.transform = `scaleX(${docH > vh ? clamp(y / (docH - vh), 0, 1) : 0})`;
+    }
+
+    if (!reduceMotion) {
+      // hero: dissolvenza e parallax in uscita
+      if (heroTitle) {
+        heroTitle.style.transform = `translateY(${heroP * -70}px)`;
+        heroTitle.style.opacity = String(1 - heroP * 0.95);
+      }
+      if (heroFluid) heroFluid.style.opacity = String(1 - heroP * 0.4);
+      sqScrollY = heroP * 60;
+      if (squares && !finePointer) squares.style.transform = `translate3d(0, ${sqScrollY}px, 0)`;
+      if (heroP > 0.02) {
+        if (heroCtas) {
+          heroCtas.style.transform = `translateY(${heroP * -36}px)`;
+          heroCtas.style.opacity = String(1 - heroP * 1.1);
+        }
+        if (heroCenter) heroCenter.style.opacity = String(1 - heroP * 1.4);
+        heroCorners.forEach(c => { c.style.opacity = String(clamp(0.55 - heroP * 1.2, 0, 1)); });
+      }
+
+      // pannelli servizi: il precedente scala/si attenua mentre il successivo lo copre
+      for (let i = 0; i < panels.length - 1; i++) {
+        const mine = panelRects[i];
+        const next = panelRects[i + 1];
+        const cover = clamp((mine.bottom - next.top) / mine.height, 0, 1);
+        panels[i].style.setProperty('--pscale', String(1 - cover * 0.05));
+        panels[i].style.setProperty('--pty', `${cover * -8}px`);
+        panels[i].style.setProperty('--pop', String(1 - cover * 0.45));
+      }
+
+      // marquee: offset orizzontale legato allo scroll + skew da velocità
+      if (sectorsRect && marqueeOffs.length === 2) {
+        const p = clamp((vh - sectorsRect.top) / (vh + sectorsRect.height), 0, 1);
+        const off = (p - 0.5) * 140;
+        const skew = clamp(velocity * 0.05, -4, 4);
+        marqueeOffs[0].style.setProperty('--mx', `${off}px`);
+        marqueeOffs[1].style.setProperty('--mx', `${-off}px`);
+        marqueeOffs.forEach(m => m.style.setProperty('--msk', `${skew}deg`));
+        clearTimeout(skewResetTimer);
+        skewResetTimer = setTimeout(() => {
+          marqueeOffs.forEach(m => m.style.setProperty('--msk', '0deg'));
+        }, 140);
+      }
+
+      // CTA finale: parallax dei blob
+      if (ctaRect && ctaFluid) {
+        const p = clamp((vh - ctaRect.top) / (vh + ctaRect.height), 0, 1);
+        ctaFluid.style.setProperty('--cy', `${(p - 0.5) * 70}px`);
+      }
+    }
+
+    // manifesto (ha già il suo clamp interno)
+    updateManifesto();
+
+    // nav
+    nav.classList.toggle('nav--scrolled', y > 40);
+  };
+
+  let fxTicking = false;
+  window.addEventListener('scroll', () => {
+    if (fxTicking) return;
+    fxTicking = true;
+    setTimeout(() => { scrollFX(); fxTicking = false; }, 16);
+  }, { passive: true });
+  window.addEventListener('resize', () => scrollFX(), { passive: true });
+  scrollFX();
 
   /* ── slider testimonianze ── */
   const quotes = document.querySelectorAll('.quote');
