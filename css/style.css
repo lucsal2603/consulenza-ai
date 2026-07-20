@@ -721,6 +721,9 @@ section { position: relative; }
 }
 .service-panel {
   position: sticky;
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
   border-radius: 22px;
   transform: scale(var(--pscale, 1)) translateY(var(--pty, 0px));
   transform-origin: top center;
@@ -733,11 +736,12 @@ section { position: relative; }
 .service-panel:nth-child(1) { top: 92px; }
 .service-panel:nth-child(2) { top: 112px; }
 .service-panel:nth-child(3) { top: 132px; }
+/* layout verticale: numero, titolo+descrizione, lista sotto */
 .service-panel__inner {
-  display: grid;
-  grid-template-columns: 110px 1.15fr 1fr;
-  gap: clamp(24px, 4vw, 64px);
-  padding: clamp(30px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(28px, 3.5vw, 48px);
 }
 .service-panel__num {
   font-family: var(--font-mono);
@@ -1312,10 +1316,6 @@ section { position: relative; }
 @media (max-width: 1080px) {
   .work__grid, .tech__grid, .risks__grid, .blog__grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .service-panel__inner {
-    grid-template-columns: 1fr;
-    gap: 22px;
   }
   .service-panel__num { font-size: 13px; }
   .why__stats { grid-template-columns: repeat(2, 1fr); }
