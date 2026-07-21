@@ -206,6 +206,9 @@
   const panels = [...document.querySelectorAll('.service-panel')];
   const pathsSection = document.getElementById('percorsi');
   const deckCards = [...document.querySelectorAll('#pathsDeck .path-card')];
+  const aboutSection = document.getElementById('chi-sono');
+  const shutterL = document.querySelector('.about__shutter--left');
+  const shutterR = document.querySelector('.about__shutter--right');
   const sectors = document.getElementById('settori');
   const marqueeOffs = [...document.querySelectorAll('.marquee__off')];
   const ctaSection = document.getElementById('contatti');
@@ -226,6 +229,7 @@
     const heroP = clamp(y / heroH, 0, 1);
     const panelRects = panels.map(p => p.getBoundingClientRect());
     const pathsRect = pathsSection ? pathsSection.getBoundingClientRect() : null;
+    const aboutRect = aboutSection ? aboutSection.getBoundingClientRect() : null;
     const sectorsRect = sectors ? sectors.getBoundingClientRect() : null;
     const ctaRect = ctaSection ? ctaSection.getBoundingClientRect() : null;
 
@@ -280,6 +284,25 @@
           });
         } else {
           deckCards.forEach(c => c.style.setProperty('--dx', '0vw'));
+        }
+      }
+
+      // chi c'è dietro: scena a tappe + otturatori diagonali finali
+      if (aboutRect && shutterL && shutterR) {
+        if (window.innerWidth > 760) {
+          const scrollable = Math.max(1, aboutRect.height - vh);
+          const p = clamp(-aboutRect.top / scrollable, 0, 1);
+          aboutSection.classList.toggle('st-1', p >= 0.15);
+          aboutSection.classList.toggle('st-2', p >= 0.38);
+          aboutSection.classList.toggle('st-3', p >= 0.56);
+          // finale: i due triangoli scuri chiudono dagli angoli alti (78% → 98%)
+          const sp = clamp((p - 0.78) / 0.2, 0, 1);
+          const es = 1 - Math.pow(1 - sp, 3);
+          const off = (1 - es) * 102;
+          shutterL.style.transform = `translate(${-off}%, ${-off}%)`;
+          shutterR.style.transform = `translate(${off}%, ${-off}%)`;
+        } else {
+          aboutSection.classList.add('st-1', 'st-2', 'st-3');
         }
       }
 
