@@ -1533,8 +1533,9 @@ section { position: relative; }
   .why__stats { gap: 28px; }
   .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
-  /* percorsi: niente pin su mobile — le carte entrano da destra (scroll reveal) */
-  .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; overflow-x: clip; }
+  /* percorsi: come su PC — sezione pinnata a tutta altezza; le carte passano
+     una alla volta (entra da destra → centro → esce a sinistra), guidate da main.js */
+  .paths { height: 440vh; height: 440svh; padding: 0; margin-top: -28px; overflow-x: clip; }
   .tech { margin-top: -28px; }
   /* chi c'è dietro: niente pin, cerchio sopra e testi in colonna */
   .about { height: auto; padding: var(--pad-section) var(--pad-x); }
@@ -1546,24 +1547,35 @@ section { position: relative; }
   .about__bio--left { text-align: left; }
   .about__bottom { margin-top: 34px; }
   .about__squares, .about__shutter { display: none; }
-  .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
-  .paths .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
-  .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
-  /* stato di partenza: carta spostata a destra e trasparente; scivola dentro con .cards-in */
+  .paths__pin {
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    display: flex; flex-direction: column;
+    padding: 88px var(--pad-x) 32px;
+    overflow: hidden;
+  }
+  .paths .section-head { margin-bottom: 0; }
+  .paths__deck { position: relative; flex: 1; min-height: 0; margin-top: clamp(14px, 3vh, 30px); width: 100%; max-width: none; }
+  /* carosello: una carta alla volta, centrata; main.js muove --cx (destra→sinistra),
+     --crot, --csc e l'opacità. Le carte fuori centro sono tagliate dal pin. */
   .path-card {
-    position: static; width: auto; height: auto; min-height: 0;
-    transform: translateX(84px);
+    position: absolute;
+    left: 7%; right: 7%; top: 50%;
+    width: auto; height: auto; min-height: 0;
+    margin: 0;
     opacity: 0;
-    transition: transform 0.7s var(--ease-out), opacity 0.7s var(--ease-out),
-                background-color 0.35s var(--ease-out), color 0.35s var(--ease-out);
+    transform: translateY(-50%) translateX(var(--cx, 120%)) rotate(var(--crot, 0deg)) scale(var(--csc, 0.92));
+    transform-origin: center center;
+    transition: none;
     will-change: transform, opacity;
   }
-  .paths__deck.cards-in .path-card { transform: none; opacity: 1; }
-  .paths__deck.cards-in .path-card:nth-child(2) { transition-delay: 0.10s; }
-  .paths__deck.cards-in .path-card:nth-child(3) { transition-delay: 0.20s; }
-  .paths__deck.cards-in .path-card:nth-child(4) { transition-delay: 0.30s; }
-  .path-card:hover { transform: none; }
-  .path-card h3 { margin-top: 26px; }
+  .path-card:nth-child(1), .path-card:nth-child(2),
+  .path-card:nth-child(3), .path-card:nth-child(4) { left: 7%; right: 7%; }
+  .path-card:hover {
+    transform: translateY(-50%) translateX(var(--cx, 0%)) rotate(var(--crot, 0deg)) scale(var(--csc, 1));
+    box-shadow: 0 30px 60px rgba(10, 8, 14, 0.28);
+  }
+  .path-card h3 { margin-top: 18px; }
 }
 
 @media (max-width: 560px) {
