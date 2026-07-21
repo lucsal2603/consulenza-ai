@@ -1538,22 +1538,34 @@ section { position: relative; }
 @media (max-width: 760px) {
   .nav__links, .nav__cta { display: none; }
   .nav__burger { display: flex; }
-  /* iOS: niente backdrop-filter sulla nav fissa (il layer sfocato si stacca
-     durante lo scroll veloce e la barra resta a metà schermo) e niente
-     transizione del padding: barra sempre identica, sempre in alto */
+  /* iOS: position:fixed si stacca durante il momentum scroll (bug WebKit).
+     Su mobile la nav diventa STICKY: la gestisce il motore di scroll nativo
+     e non può staccarsi mai. Sta in flusso, quindi la hero si accorcia della
+     sua altezza: nav + hero = esattamente uno schermo. */
   .nav {
-    padding-top: 14px;
-    padding-bottom: 14px;
-    transition: background-color 0.4s, border-color 0.4s;
+    position: sticky;
+    height: 58px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: rgba(19, 16, 25, 0.96);
+    border-bottom-color: rgba(239, 235, 226, 0.08);
+    transform: none;
+    will-change: auto;
+    transition: none;
   }
   .nav--scrolled {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: rgba(19, 16, 25, 0.96);
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
-  .hero { padding-bottom: 150px; }
+  .hero {
+    min-height: calc(100vh - 58px);
+    min-height: calc(100svh - 58px);
+    padding-top: 56px;
+    padding-bottom: 150px;
+  }
   .hero__title { font-size: clamp(2.5rem, 11.5vw, 4rem); max-width: none; }
   .hero__center { bottom: 64px; width: 100%; }
   .hero__corner--right { display: none; }
