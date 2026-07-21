@@ -50,10 +50,10 @@
       e.preventDefault();
       const navH = nav.offsetHeight;
       let y = id === 'top' || !target ? 0 : target.getBoundingClientRect().top + window.scrollY - navH + 2;
-      // su desktop la CTA vive sul sipario chiuso di "Chi c'è dietro":
+      // la CTA vive sul sipario chiuso di "Chi c'è dietro" (desktop e mobile):
       // i link ai contatti portano lì (fine della pista, scena chiusa)
       const aboutEl = document.getElementById('chi-sono');
-      if (id === 'contatti' && aboutEl && window.innerWidth > 760 && !reduceMotion) {
+      if (id === 'contatti' && aboutEl && !reduceMotion) {
         y = aboutEl.offsetTop + aboutEl.offsetHeight - window.innerHeight;
       }
       smoothScrollTo(Math.max(0, y));
@@ -326,20 +326,17 @@
       }
 
       // chi c'è dietro: scena a tappe + chiusura one-shot degli otturatori
-      // (superata la soglia si chiudono da soli, per intero — niente scrub)
+      // (superata la soglia si chiudono da soli, per intero — niente scrub).
+      // Attivo su tutti gli schermi, desktop e telefono.
       if (aboutRect && shutterL && shutterR) {
-        if (window.innerWidth > 760) {
-          const scrollable = Math.max(1, aboutRect.height - vh);
-          const p = clamp(-aboutRect.top / scrollable, 0, 1);
-          aboutSection.classList.toggle('st-1', p >= 0.14);
-          aboutSection.classList.toggle('st-2', p >= 0.32);
-          aboutSection.classList.toggle('st-3', p >= 0.48);
-          aboutSection.classList.toggle('closing', p >= 0.6);
-          aboutSection.classList.toggle('st-4', p >= 0.64);
-          // dal 64% alla fine (~1,3 schermi) la CTA resta ferma sul sipario chiuso
-        } else {
-          aboutSection.classList.add('st-1', 'st-2', 'st-3');
-        }
+        const aboutScrollable = Math.max(1, aboutRect.height - vh);
+        const ap = clamp(-aboutRect.top / aboutScrollable, 0, 1);
+        aboutSection.classList.toggle('st-1', ap >= 0.14);
+        aboutSection.classList.toggle('st-2', ap >= 0.32);
+        aboutSection.classList.toggle('st-3', ap >= 0.48);
+        aboutSection.classList.toggle('closing', ap >= 0.6);
+        aboutSection.classList.toggle('st-4', ap >= 0.64);
+        // dal 64% alla fine la CTA resta ferma sul sipario chiuso
       }
 
       // marquee: offset orizzontale legato allo scroll + skew da velocità

@@ -1373,9 +1373,9 @@ section { position: relative; }
   pointer-events: auto;
 }
 
-/* su desktop la sezione contatti in fondo è sostituita dalla CTA
-   sugli otturatori: la nascondiamo del tutto */
-@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+/* la sezione contatti in fondo è sostituita dalla CTA sugli otturatori
+   (desktop E mobile): la nascondiamo del tutto. Resta con reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
   .cta { display: none; }
 }
 .btn--ink { background: var(--ink); color: var(--bone); }
@@ -1574,16 +1574,24 @@ section { position: relative; }
   /* sipario: la sezione bianca (Tecnologia) sale e copre il carosello verde.
      z-index 3 e border-radius top arrivano dalla regola desktop di .tech */
   .tech { margin-top: calc(-100vh - 40px); margin-top: calc(-100svh - 40px); }
-  /* chi c'è dietro: niente pin, cerchio sopra e testi in colonna */
-  .about { height: auto; padding: var(--pad-section) var(--pad-x); }
-  .about__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
-  .about .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
-  .about__head, .about__bio, .about__bottom { opacity: 1; transform: none; }
-  .about__row { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
-  .about__photo { width: 210px; margin-inline: auto; order: -1; }
-  .about__bio--left { text-align: left; }
-  .about__bottom { margin-top: 34px; }
-  .about__squares, .about__shutter, .about__next { display: none; }
+  /* chi c'è dietro: pin e sipario anche su telefono, layout compatto
+     (il nome fa da testata: la section-head sparisce per guadagnare spazio) */
+  .about { height: 430vh; height: 430svh; }
+  .about .section-head { display: none; }
+  .about__pin { padding: 64px 20px 14px; }
+  .about__head { margin-top: 2px; }
+  .about__role { font-size: 9px; padding: 7px 12px; letter-spacing: 0.12em; }
+  .about__name { font-size: 1.7rem; margin-top: 10px; }
+  .about__row { grid-template-columns: 1fr; gap: 10px; margin-top: 8px; align-content: center; }
+  .about__photo { width: 118px; margin-inline: auto; order: -1; }
+  .about__bio { font-size: 13.5px; line-height: 1.42; text-align: center; }
+  .about__bio--left { text-align: center; transform: translateX(-36px); }
+  .about__bio--right { transform: translateX(36px); }
+  .about__extra { font-size: 10px; line-height: 1.6; }
+  .about__bottom { margin-top: 0; }
+  .about__actions { margin-top: 12px; gap: 10px; }
+  .about__next-title { font-size: clamp(2rem, 9.5vw, 2.7rem); }
+  .about__squares { display: none; }
   .paths__pin {
     position: sticky; top: 0;
     height: 100vh; height: 100svh;
