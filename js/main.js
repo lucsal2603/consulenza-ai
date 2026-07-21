@@ -75,7 +75,39 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (finePointer && !reduceMotion) {
     let mx = -100, my = -100, rx = -100, ry = -100;
-    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+    /* colore del cursore in base allo sfondo sotto il puntatore
+       (riprende la palette del logo: lime, violetto, corallo, ambra) */
+    const CUR = { lime: '#C8F04C', violet: '#8B7CFF', coral: '#FF5A3C', amber: '#FFC845', ink: '#131019' };
+    let lastPick = 0;
+    const pickCursorColor = () => {
+      let el = document.elementFromPoint(mx, my);
+      while (el && el !== document.documentElement) {
+        const bg = getComputedStyle(el).backgroundColor;
+        const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (m && (m[4] === undefined || parseFloat(m[4]) > 0.4)) {
+          const r = +m[1], g = +m[2], b = +m[3];
+          const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+          let c;
+          if (g > 190 && r > 140 && b < 140) c = CUR.coral;        // sfondo lime
+          else if (r > 200 && g < 140 && b < 130) c = CUR.lime;    // sfondo corallo
+          else if (b > 190 && r > 90 && g < 170) c = CUR.amber;    // sfondo violetto
+          else if (r > 220 && g > 160 && b < 130) c = CUR.ink;     // sfondo ambra
+          else c = lum < 0.45 ? CUR.lime : CUR.violet;             // scuro / chiaro
+          cursor.style.backgroundColor = c;
+          ring.style.borderColor = c;
+          return;
+        }
+        el = el.parentElement;
+      }
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      const now = performance.now();
+      if (now - lastPick > 120) { lastPick = now; pickCursorColor(); }
+    }, { passive: true });
     const loop = () => {
       rx += (mx - rx) * 0.16;
       ry += (my - ry) * 0.16;
@@ -150,7 +182,7 @@
   const manifesto = document.getElementById('manifestoText');
   let updateManifesto = () => {};
   if (manifesto) {
-    const ACCENT = ['decisioni,', 'misurabile.', 'automatizzano,'];
+    const ACCENT = ['cambiano,', 'organizzativa', 'misurabile.'];
     const words = manifesto.textContent.trim().split(/\s+/);
     manifesto.innerHTML = words
       .map(w => `<span class="w${ACCENT.includes(w) ? ' w--accent' : ''}">${w}</span>`)
