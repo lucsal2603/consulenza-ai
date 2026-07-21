@@ -1536,10 +1536,12 @@ section { position: relative; }
   .why__stats { gap: 28px; }
   .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
-  /* percorsi: carosello orizzontale — si swipa/scorre a destra e sinistra e
-     ogni carta si centra da sola (scroll-snap nativo, niente scrub da scroll) */
-  .paths { height: auto; padding: var(--pad-section) 0; margin-top: -28px; overflow-x: clip; }
-  .tech { margin-top: -28px; }
+  /* percorsi: carosello orizzontale pinnato — si swipa a dx/sx e ogni carta si
+     centra; scrollando in giù la sezione bianca dopo SALE a coprirla (sipario) */
+  .paths { height: 210vh; height: 210svh; padding: 0; margin-top: -28px; overflow-x: clip; position: relative; z-index: 2; }
+  /* sipario: la sezione bianca (Tecnologia) sale e copre il carosello verde.
+     z-index 3 e border-radius top arrivano dalla regola desktop di .tech */
+  .tech { margin-top: calc(-100vh - 40px); margin-top: calc(-100svh - 40px); }
   /* chi c'è dietro: niente pin, cerchio sopra e testi in colonna */
   .about { height: auto; padding: var(--pad-section) var(--pad-x); }
   .about__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
@@ -1550,13 +1552,18 @@ section { position: relative; }
   .about__bio--left { text-align: left; }
   .about__bottom { margin-top: 34px; }
   .about__squares, .about__shutter { display: none; }
-  .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
+  .paths__pin {
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 0 28px; overflow: visible;
+  }
   .paths .section-head { margin-bottom: clamp(22px, 5vw, 38px); padding-inline: var(--pad-x); }
   /* deck = binario orizzontale con snap: swipe a dx/sx e la carta si centra.
      Il padding laterale lascia intravedere le carte accanto (affordance). */
   .paths__deck {
     position: static;
-    display: flex; flex-direction: row; gap: 14px;
+    display: flex; flex: 0 0 auto; flex-direction: row; gap: 14px;
     margin: 0; max-width: none; min-height: 0;
     padding: 6px 11% 26px;
     overflow-x: auto; overflow-y: visible;
