@@ -49,7 +49,13 @@
       if (!target && id !== 'top') return;
       e.preventDefault();
       const navH = nav.offsetHeight;
-      const y = id === 'top' || !target ? 0 : target.getBoundingClientRect().top + window.scrollY - navH + 2;
+      let y = id === 'top' || !target ? 0 : target.getBoundingClientRect().top + window.scrollY - navH + 2;
+      // su desktop la CTA vive sul sipario chiuso di "Chi c'è dietro":
+      // i link ai contatti portano lì (fine della pista, scena chiusa)
+      const aboutEl = document.getElementById('chi-sono');
+      if (id === 'contatti' && aboutEl && window.innerWidth > 760 && !reduceMotion) {
+        y = aboutEl.offsetTop + aboutEl.offsetHeight - window.innerHeight;
+      }
       smoothScrollTo(Math.max(0, y));
       history.pushState(null, '', '#' + id);
     });
@@ -325,11 +331,12 @@
         if (window.innerWidth > 760) {
           const scrollable = Math.max(1, aboutRect.height - vh);
           const p = clamp(-aboutRect.top / scrollable, 0, 1);
-          aboutSection.classList.toggle('st-1', p >= 0.16);
-          aboutSection.classList.toggle('st-2', p >= 0.38);
-          aboutSection.classList.toggle('st-3', p >= 0.56);
-          aboutSection.classList.toggle('closing', p >= 0.68);
-          aboutSection.classList.toggle('st-4', p >= 0.72);
+          aboutSection.classList.toggle('st-1', p >= 0.14);
+          aboutSection.classList.toggle('st-2', p >= 0.32);
+          aboutSection.classList.toggle('st-3', p >= 0.48);
+          aboutSection.classList.toggle('closing', p >= 0.6);
+          aboutSection.classList.toggle('st-4', p >= 0.64);
+          // dal 64% alla fine (~1,3 schermi) la CTA resta ferma sul sipario chiuso
         } else {
           aboutSection.classList.add('st-1', 'st-2', 'st-3');
         }
