@@ -136,7 +136,7 @@ body.is-loaded .loader { opacity: 0; visibility: hidden; }
 }
 
 /* ─────────── cursore ─────────── */
-.cursor, .cursor-ring {
+.cursor {
   position: fixed;
   top: 0;
   left: 0;
@@ -144,27 +144,18 @@ body.is-loaded .loader { opacity: 0; visibility: hidden; }
   z-index: 9999;
   border-radius: 50%;
   will-change: transform;
-}
-.cursor {
-  width: 9px;
-  height: 9px;
+  width: 16px;
+  height: 16px;
   background: var(--lime);
   transform: translate(-50%, -50%);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, width 0.2s var(--ease-out), height 0.2s var(--ease-out);
 }
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--lime);
-  transform: translate(-50%, -50%);
-  transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out), border-color 0.3s ease;
-}
-.cursor-ring.is-hover {
-  width: 60px;
-  height: 60px;
+.cursor.is-hover {
+  width: 28px;
+  height: 28px;
 }
 @media (hover: none), (pointer: coarse) {
-  .cursor, .cursor-ring { display: none; }
+  .cursor { display: none; }
 }
 
 /* ─────────── bottoni ─────────── */
@@ -1498,7 +1489,7 @@ section { position: relative; }
     opacity: 1 !important;
     transform: none !important;
   }
-  .cursor, .cursor-ring { display: none; }
+  .cursor { display: none; }
   .manifesto__text .w {
     transition: none;
     transform: none !important;

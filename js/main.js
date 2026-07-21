@@ -69,14 +69,13 @@
   burger.addEventListener('click', () => toggleMenu());
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
-  /* ── cursore custom ── */
+  /* ── cursore custom: solo pallino, colore in base allo sfondo ── */
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (finePointer && !reduceMotion) {
-    let mx = -100, my = -100, rx = -100, ry = -100;
+    let mx = -100, my = -100;
 
-    /* colore del cursore in base allo sfondo sotto il puntatore
+    /* colore del pallino in base allo sfondo sotto il puntatore
        (riprende la palette del logo: lime, violetto, corallo, ambra) */
     const CUR = { lime: '#C8F04C', violet: '#8B7CFF', coral: '#FF5A3C', amber: '#FFC845', ink: '#131019' };
     let lastPick = 0;
@@ -95,7 +94,6 @@
           else if (r > 220 && g > 160 && b < 130) c = CUR.ink;     // sfondo ambra
           else c = lum < 0.45 ? CUR.lime : CUR.violet;             // scuro / chiaro
           cursor.style.backgroundColor = c;
-          ring.style.borderColor = c;
           return;
         }
         el = el.parentElement;
@@ -105,24 +103,16 @@
     window.addEventListener('mousemove', (e) => {
       mx = e.clientX;
       my = e.clientY;
+      cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
       const now = performance.now();
       if (now - lastPick > 120) { lastPick = now; pickCursorColor(); }
     }, { passive: true });
-    const loop = () => {
-      rx += (mx - rx) * 0.16;
-      ry += (my - ry) * 0.16;
-      cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
     document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+      el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
     });
   } else {
     cursor.remove();
-    ring.remove();
   }
 
   /* ── parallax quadrati hero (mouse + scroll) ── */
