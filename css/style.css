@@ -1533,9 +1533,9 @@ section { position: relative; }
   .why__stats { gap: 28px; }
   .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
-  /* percorsi: come su PC — sezione pinnata a tutta altezza; le carte passano
-     una alla volta (entra da destra → centro → esce a sinistra), guidate da main.js */
-  .paths { height: 440vh; height: 440svh; padding: 0; margin-top: -28px; overflow-x: clip; }
+  /* percorsi: carosello orizzontale — si swipa/scorre a destra e sinistra e
+     ogni carta si centra da sola (scroll-snap nativo, niente scrub da scroll) */
+  .paths { height: auto; padding: var(--pad-section) 0; margin-top: -28px; overflow-x: clip; }
   .tech { margin-top: -28px; }
   /* chi c'è dietro: niente pin, cerchio sopra e testi in colonna */
   .about { height: auto; padding: var(--pad-section) var(--pad-x); }
@@ -1547,34 +1547,33 @@ section { position: relative; }
   .about__bio--left { text-align: left; }
   .about__bottom { margin-top: 34px; }
   .about__squares, .about__shutter { display: none; }
-  .paths__pin {
-    position: sticky; top: 0;
-    height: 100vh; height: 100svh;
-    display: flex; flex-direction: column;
-    padding: 88px var(--pad-x) 32px;
-    overflow: hidden;
+  .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
+  .paths .section-head { margin-bottom: clamp(22px, 5vw, 38px); padding-inline: var(--pad-x); }
+  /* deck = binario orizzontale con snap: swipe a dx/sx e la carta si centra.
+     Il padding laterale lascia intravedere le carte accanto (affordance). */
+  .paths__deck {
+    position: static;
+    display: flex; flex-direction: row; gap: 14px;
+    margin: 0; max-width: none; min-height: 0;
+    padding: 6px 11% 26px;
+    overflow-x: auto; overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 11%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .paths .section-head { margin-bottom: 0; }
-  .paths__deck { position: relative; flex: 1; min-height: 0; margin-top: clamp(14px, 3vh, 30px); width: 100%; max-width: none; }
-  /* carosello: una carta alla volta, centrata; main.js muove --cx (destra→sinistra),
-     --crot, --csc e l'opacità. Le carte fuori centro sono tagliate dal pin. */
+  .paths__deck::-webkit-scrollbar { display: none; }
   .path-card {
-    position: absolute;
-    left: 7%; right: 7%; top: 50%;
-    width: auto; height: auto; min-height: 0;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(-50%) translateX(var(--cx, 120%)) rotate(var(--crot, 0deg)) scale(var(--csc, 0.92));
-    transform-origin: center center;
-    transition: none;
-    will-change: transform, opacity;
+    position: static;
+    flex: 0 0 78%; width: 78%;
+    height: auto; min-height: clamp(300px, 64vw, 380px);
+    margin: 0; opacity: 1;
+    transform: none;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    transition: box-shadow 0.35s var(--ease-out);
   }
-  .path-card:nth-child(1), .path-card:nth-child(2),
-  .path-card:nth-child(3), .path-card:nth-child(4) { left: 7%; right: 7%; }
-  .path-card:hover {
-    transform: translateY(-50%) translateX(var(--cx, 0%)) rotate(var(--crot, 0deg)) scale(var(--csc, 1));
-    box-shadow: 0 30px 60px rgba(10, 8, 14, 0.28);
-  }
+  .path-card:hover { transform: none; }
   .path-card h3 { margin-top: 18px; }
 }
 
@@ -1618,6 +1617,6 @@ section { position: relative; }
   .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
   .tech { margin-top: -28px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
-  .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
-  .path-card { position: static; width: auto; height: auto; min-height: 0; transform: none !important; opacity: 1 !important; }
+  .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; overflow: visible; scroll-snap-type: none; padding: 0; }
+  .path-card { position: static; flex: 0 0 auto; width: auto; height: auto; min-height: 0; scroll-snap-align: none; transform: none !important; opacity: 1 !important; }
 }

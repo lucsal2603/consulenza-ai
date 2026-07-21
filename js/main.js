@@ -271,37 +271,17 @@
         panels[i].style.setProperty('--pty', `${push * -11}px`);
       }
 
-      // percorsi: le carte volano da destra e si impilano a sinistra (pin + scrub)
-      if (pathsRect && deckCards.length) {
+      // percorsi (solo desktop): le carte volano da destra e si impilano (pin + scrub).
+      // Su mobile è un carosello orizzontale con scroll-snap nativo → nessuno scrub JS.
+      if (pathsRect && deckCards.length && window.innerWidth > 760) {
         const scrollable = Math.max(1, pathsRect.height - vh);
         const prog = clamp(-pathsRect.top / scrollable, 0, 1);
-        if (window.innerWidth > 760) {
-          deckCards.forEach((c, i) => {
-            // atterraggi entro il 62%: poi pausa e sipario della sezione dopo
-            const p = clamp((prog - i * 0.14) / 0.20, 0, 1);
-            const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
-            c.style.setProperty('--dx', `${(1 - e) * 115}vw`);
-          });
-        } else {
-          // mobile: come su PC ma UNA carta alla volta — entra da destra,
-          // si ferma al centro, poi esce a sinistra mentre arriva la successiva
-          const n = deckCards.length;                 // 4
-          const half = 0.17;                          // semi-finestra: finestre adiacenti si sovrappongono → crossfade
-          deckCards.forEach((c, i) => {
-            const center = (i + 0.5) / n;             // 0.125, 0.375, 0.625, 0.875
-            let d = prog - center;                    // <0 = in arrivo da destra, >0 = uscita a sinistra
-            if (i === 0) d = Math.max(d, 0);          // prima: già centrata all'ingresso del pin
-            if (i === n - 1) d = Math.min(d, 0);      // ultima: resta centrata fino in fondo
-            const x = clamp(-d / half, -1.25, 1.25) * 100;      // % (0 = centrata)
-            const a = Math.abs(d);
-            const op = clamp((half - a) / (half * 0.42), 0, 1); // plateau centrale + dissolvenza ai bordi
-            c.style.setProperty('--cx', `${x}%`);
-            c.style.setProperty('--crot', `${x * 0.03}deg`);
-            c.style.setProperty('--csc', String(0.92 + 0.08 * op));
-            c.style.opacity = String(op);
-            c.style.zIndex = op > 0.5 ? '10' : '1';
-          });
-        }
+        deckCards.forEach((c, i) => {
+          // atterraggi entro il 62%: poi pausa e sipario della sezione dopo
+          const p = clamp((prog - i * 0.14) / 0.20, 0, 1);
+          const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
+          c.style.setProperty('--dx', `${(1 - e) * 115}vw`);
+        });
       }
 
       // chi c'è dietro: scena a tappe + otturatori diagonali finali
