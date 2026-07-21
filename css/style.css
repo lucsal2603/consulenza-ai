@@ -212,6 +212,9 @@ body.is-loaded .loader { opacity: 0; visibility: hidden; }
   padding: 18px var(--pad-x);
   transition: background-color 0.4s, border-color 0.4s, padding 0.4s;
   border-bottom: 1px solid transparent;
+  /* layer proprio: su iOS tiene la barra inchiodata durante il momentum scroll */
+  transform: translateZ(0);
+  will-change: transform;
 }
 .nav--scrolled {
   background: rgba(19, 16, 25, 0.78);
@@ -1533,6 +1536,21 @@ section { position: relative; }
 @media (max-width: 760px) {
   .nav__links, .nav__cta { display: none; }
   .nav__burger { display: flex; }
+  /* iOS: niente backdrop-filter sulla nav fissa (il layer sfocato si stacca
+     durante lo scroll veloce e la barra resta a metà schermo) e niente
+     transizione del padding: barra sempre identica, sempre in alto */
+  .nav {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    transition: background-color 0.4s, border-color 0.4s;
+  }
+  .nav--scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(19, 16, 25, 0.96);
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
   .hero { padding-bottom: 150px; }
   .hero__title { font-size: clamp(2.5rem, 11.5vw, 4rem); max-width: none; }
   .hero__center { bottom: 64px; width: 100%; }
