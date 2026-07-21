@@ -762,9 +762,11 @@ section { position: relative; }
 .service-panel--coral  { background: var(--coral); }
 .service-panel--lime   { background: var(--lime); }
 .service-panel--violet { background: var(--violet); }
-.service-panel:nth-child(1) { top: 92px; }
-.service-panel:nth-child(2) { top: 112px; }
-.service-panel:nth-child(3) { top: 132px; }
+/* aggancio più in basso: le card si centrano in verticale sugli schermi
+   alti (50svh − mezza card ≈ 240px) invece di incollarsi sotto la nav */
+.service-panel:nth-child(1) { top: max(92px, calc(50vh - 240px)); top: max(92px, calc(50svh - 240px)); }
+.service-panel:nth-child(2) { top: max(112px, calc(50vh - 220px)); top: max(112px, calc(50svh - 220px)); }
+.service-panel:nth-child(3) { top: max(132px, calc(50vh - 200px)); top: max(132px, calc(50svh - 200px)); }
 /* layout verticale: numero, titolo+descrizione, lista sotto */
 .service-panel__inner {
   display: flex;
