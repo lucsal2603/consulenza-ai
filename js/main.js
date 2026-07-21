@@ -319,20 +319,17 @@
         });
       }
 
-      // chi c'è dietro: scena a tappe + otturatori diagonali finali
+      // chi c'è dietro: scena a tappe + chiusura one-shot degli otturatori
+      // (superata la soglia si chiudono da soli, per intero — niente scrub)
       if (aboutRect && shutterL && shutterR) {
         if (window.innerWidth > 760) {
           const scrollable = Math.max(1, aboutRect.height - vh);
           const p = clamp(-aboutRect.top / scrollable, 0, 1);
-          aboutSection.classList.toggle('st-1', p >= 0.15);
+          aboutSection.classList.toggle('st-1', p >= 0.16);
           aboutSection.classList.toggle('st-2', p >= 0.38);
           aboutSection.classList.toggle('st-3', p >= 0.56);
-          // finale: i due triangoli scuri chiudono dagli angoli alti (78% → 98%)
-          const sp = clamp((p - 0.78) / 0.2, 0, 1);
-          const es = 1 - Math.pow(1 - sp, 3);
-          const off = (1 - es) * 102;
-          shutterL.style.transform = `translate(${-off}%, ${-off}%)`;
-          shutterR.style.transform = `translate(${off}%, ${-off}%)`;
+          aboutSection.classList.toggle('closing', p >= 0.68);
+          aboutSection.classList.toggle('st-4', p >= 0.72);
         } else {
           aboutSection.classList.add('st-1', 'st-2', 'st-3');
         }

@@ -1148,8 +1148,8 @@ section { position: relative; }
 .about {
   position: relative;
   background: var(--paper);
-  height: 500vh;
-  height: 500svh;
+  height: 420vh;
+  height: 420svh;
   padding: 0;
 }
 .about__pin {
@@ -1163,28 +1163,38 @@ section { position: relative; }
   overflow: hidden;
 }
 .about .section-head { margin-bottom: 0; position: relative; z-index: 1; }
+/* testata: visibile fin dall'arrivo — pill scura + nome maiuscolo,
+   cognome in outline (richiama il marquee dei settori) */
 .about__head {
   text-align: center;
   margin-top: clamp(8px, 2vh, 22px);
   position: relative;
   z-index: 1;
-  opacity: 0;
-  transform: translateY(-24px);
-  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
 .about__role {
+  display: inline-block;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  color: var(--violet);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--lime);
+  background: var(--ink);
+  padding: 9px 18px;
+  border-radius: 999px;
 }
 .about__name {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 660;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.3rem, 4.8vw, 3.9rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
   line-height: 1;
   color: var(--ink);
-  margin-top: 12px;
+  margin-top: 16px;
+}
+.about__name em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(19, 16, 25, 0.85);
 }
 /* la bio circonda il cerchio: colonne ai lati della foto */
 .about__row {
@@ -1221,13 +1231,17 @@ section { position: relative; }
   object-fit: cover;
   display: block;
 }
+/* bio in stile manifesto: Bricolage 500 con parole chiave in corallo */
 .about__bio {
-  font-size: 15px;
-  line-height: 1.6;
-  color: rgba(19, 16, 25, 0.72);
+  font-size: clamp(1.02rem, 1.5vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+  color: rgba(19, 16, 25, 0.86);
   opacity: 0;
   transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
+.about__bio .acc { color: var(--coral); }
 .about__bio--left { text-align: right; transform: translateX(-46px); }
 .about__bio--right { transform: translateX(46px); }
 .about__bottom {
@@ -1255,7 +1269,7 @@ section { position: relative; }
   margin-top: 18px;
 }
 /* tappe pilotate dallo scroll (classi sul <section>) */
-.about.st-1 .about__head, .about.st-1 .about__bio--left { opacity: 1; transform: none; }
+.about.st-1 .about__bio--left { opacity: 1; transform: none; }
 .about.st-2 .about__bio--right { opacity: 1; transform: none; }
 .about.st-3 .about__bottom { opacity: 1; transform: none; }
 
@@ -1280,16 +1294,74 @@ section { position: relative; }
 .asq--6 { width: 18px; height: 18px; background: rgba(76, 111, 255, 0.5);  right: 30%; top: 6%; animation-duration: 4s;   animation-delay: 0.8s; }
 .asq--7 { width: 24px; height: 24px; background: rgba(19, 16, 25, 0.14);   left: 46%; top: 90%; animation-duration: 4.8s; animation-delay: 0.4s; }
 
-/* otturatori finali: due triangoli scuri che chiudono in diagonale */
+/* otturatori finali: due triangoli scuri — uno da in alto a sinistra,
+   uno da in basso a destra. La chiusura è one-shot (classe .closing):
+   superata la soglia si chiude tutta da sola, niente stati a metà.
+   I clip si sovrappongono oltre la diagonale: nessuna cucitura visibile. */
 .about__shutter {
   position: absolute;
   inset: 0;
   background: var(--ink);
   z-index: 5;
   will-change: transform;
+  transition: transform 0.95s var(--ease-in-out);
 }
-.about__shutter--left  { clip-path: polygon(0 0, 100% 0, 0 100%); transform: translate(-102%, -102%); }
-.about__shutter--right { clip-path: polygon(100% 0, 100% 100%, 0 100%); transform: translate(102%, -102%); }
+.about__shutter--left  { clip-path: polygon(0 0, 104% 0, 0 104%); transform: translate(-104%, -104%); }
+.about__shutter--right { clip-path: polygon(104% -4%, 104% 104%, -4% 104%); transform: translate(104%, 104%); }
+.about.closing .about__shutter--left,
+.about.closing .about__shutter--right { transform: translate(0, 0); }
+
+/* testata della sezione successiva: appare sullo schermo appena chiuso */
+.about__next {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: clamp(84px, 13vh, 130px);
+  z-index: 6;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid rgba(239, 235, 226, 0.22);
+  padding-top: 20px;
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease-out) 0.4s, transform 0.7s var(--ease-out) 0.4s;
+  pointer-events: none;
+}
+.about__next-title {
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  font-weight: 640;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--bone);
+}
+.about__next-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: rgba(239, 235, 226, 0.5);
+}
+.about.st-4 .about__next { opacity: 1; transform: none; }
+
+/* su desktop la testata vera di "Dicono di noi" è già mostrata dagli
+   otturatori: quella nella sezione resta solo per screen reader */
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .quotes .section-head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    padding: 0;
+    margin: -1px;
+    border: 0;
+  }
+  .quotes { padding-top: clamp(56px, 9vh, 110px); }
+}
 .btn--ink { background: var(--ink); color: var(--bone); }
 .btn--ink:hover { background: var(--violet); color: var(--ink); }
 
@@ -1551,7 +1623,7 @@ section { position: relative; }
   .about__photo { width: 210px; margin-inline: auto; order: -1; }
   .about__bio--left { text-align: left; }
   .about__bottom { margin-top: 34px; }
-  .about__squares, .about__shutter { display: none; }
+  .about__squares, .about__shutter, .about__next { display: none; }
   .paths__pin {
     position: sticky; top: 0;
     height: 100vh; height: 100svh;
@@ -1628,7 +1700,7 @@ section { position: relative; }
   .about__head, .about__bio, .about__bottom { opacity: 1 !important; transform: none !important; transition: none !important; }
   .about__row { margin-top: 28px; }
   .about__photo { animation: none !important; }
-  .about__squares, .about__shutter { display: none !important; }
+  .about__squares, .about__shutter, .about__next { display: none !important; }
   .service-panel { transform: none !important; opacity: 1 !important; transition: none !important; }
   .marquee__off, .cta__fluid { transform: none !important; transition: none !important; }
   /* manifesto: niente pin, torna sezione normale */
