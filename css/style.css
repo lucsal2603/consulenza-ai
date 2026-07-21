@@ -1133,6 +1133,67 @@ section { position: relative; }
   max-width: 26ch;
 }
 
+/* ─────────── chi c'è dietro ─────────── */
+.about {
+  background: var(--paper);
+  padding: var(--pad-section) var(--pad-x);
+}
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 400px) 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+.about__photo {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(19, 16, 25, 0.15);
+  box-shadow: 0 24px 48px -20px rgba(19, 16, 25, 0.25);
+}
+/* il clip sta sull'immagine interna: se fosse sul contenitore osservato,
+   l'IntersectionObserver non vedrebbe mai l'elemento (area clippata = 0) */
+.about__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.1s var(--ease-in-out) 0.15s;
+}
+.about__photo.is-in img { clip-path: inset(0 0 0 0); }
+.about__role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--violet);
+}
+.about__name {
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+  font-weight: 660;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  margin-top: 14px;
+}
+.about__bio {
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: rgba(19, 16, 25, 0.72);
+  margin-top: 20px;
+  max-width: 52ch;
+}
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+.btn--ink { background: var(--ink); color: var(--bone); }
+.btn--ink:hover { background: var(--violet); color: var(--ink); }
+
 /* ─────────── testimonianze ─────────── */
 .quotes {
   background: var(--ink);
@@ -1375,6 +1436,8 @@ section { position: relative; }
   /* percorsi: niente pin su mobile, lista verticale normale */
   .paths { height: auto; padding: var(--pad-section) var(--pad-x); margin-top: -28px; }
   .tech { margin-top: -28px; }
+  .about__grid { grid-template-columns: 1fr; }
+  .about__photo { max-width: 340px; }
   .paths__pin { position: static; height: auto; padding: 0; overflow: visible; display: block; }
   .paths .section-head { margin-bottom: clamp(32px, 6vw, 48px); }
   .paths__deck { min-height: 0; margin-top: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -1407,6 +1470,7 @@ section { position: relative; }
   }
   .section-title .st, .cta__title .st { transform: none !important; transition: none !important; }
   .img-slot { clip-path: none !important; transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out); }
+  .about__photo img { clip-path: none !important; transition: none; }
   .service-panel { transform: none !important; opacity: 1 !important; transition: none !important; }
   .marquee__off, .cta__fluid { transform: none !important; transition: none !important; }
   /* manifesto: niente pin, torna sezione normale */
