@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=11">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='2' width='8' height='8' fill='%23C8F04C'/><rect x='12' y='12' width='8' height='8' fill='%237C5CFF'/><rect x='22' y='2' width='8' height='8' fill='%23FF5A3C'/><rect x='2' y='22' width='8' height='8' fill='%23FFC845'/><rect x='22' y='22' width='8' height='8' fill='%23F5F2EA'/></svg>">
 </head>
 <body>
@@ -423,6 +423,41 @@
       </div>
     </section>
 
+    <!-- ═══════════ INSIGHTS ═══════════ -->
+    <section class="blog" id="insights">
+      <div class="section-head reveal">
+        <h2 class="section-title">Dal laboratorio</h2>
+        <p class="section-tag">{ idee, guide e casi in corso }</p>
+      </div>
+
+      <div class="blog__grid">
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 01 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ LUGLIO 2026 }</p>
+          <h3>AI Act: cosa cambia davvero per le PMI italiane</h3>
+          <p class="blog-card__excerpt">Scadenze, obblighi e falsi miti del regolamento europeo — spiegati senza legalese.</p>
+        </a>
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 02 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ GIUGNO 2026 }</p>
+          <h3>RAG spiegato al tuo direttore operativo</h3>
+          <p class="blog-card__excerpt">Come l'AI può rispondere usando i documenti della tua azienda — e citare le fonti.</p>
+        </a>
+        <a href="#" class="blog-card reveal">
+          <div class="img-slot">
+            <span class="img-slot__label">IMMAGINE · ARTICOLO 03 · 16:9</span>
+          </div>
+          <p class="blog-card__date">{ GIUGNO 2026 }</p>
+          <h3>Quanto costa (davvero) un progetto AI</h3>
+          <p class="blog-card__excerpt">Licenze, sviluppo, consumi: la struttura dei costi vera, voce per voce.</p>
+        </a>
+      </div>
+    </section>
+
     <!-- ═══════════ CHI C'È DIETRO (pinnato: la scena si compone a tappe) ═══════════ -->
     <section class="about" id="chi-sono">
       <div class="about__pin">
@@ -466,85 +501,11 @@
         <div class="about__shutter about__shutter--left" aria-hidden="true"></div>
         <div class="about__shutter about__shutter--right" aria-hidden="true"></div>
 
-        <!-- testata della sezione successiva, appare sullo schermo chiuso -->
+        <!-- anteprima della CTA finale: appare sullo schermo appena chiuso -->
         <div class="about__next" aria-hidden="true">
-          <h2 class="about__next-title">Dicono di noi</h2>
-          <p class="about__next-tag">{ testimonianze di esempio — da sostituire }</p>
+          <p class="about__next-tag">{ il primo passo è una conversazione }</p>
+          <h2 class="about__next-title">Pronto a portare<br>l'AI nella tua azienda?</h2>
         </div>
-      </div>
-    </section>
-
-    <!-- ═══════════ TESTIMONIANZE ═══════════ -->
-    <section class="quotes" id="testimonianze">
-      <div class="section-head section-head--dark reveal">
-        <h2 class="section-title">Dicono di noi</h2>
-        <p class="section-tag">{ testimonianze di esempio — da sostituire }</p>
-      </div>
-
-      <div class="quotes__slider reveal" id="slider">
-        <div class="quotes__viewport" id="sliderViewport">
-          <blockquote class="quote is-active">
-            <p class="quote__text">« Pensavamo servisse solo la tecnologia. Il lavoro vero è stato su ruoli e processi: ora l'AI la usano davvero, ogni giorno. »</p>
-            <footer>
-              <cite>NOME COGNOME</cite>
-              <span>DIREZIONE OPERATIVA · AZIENDA MANIFATTURIERA</span>
-            </footer>
-          </blockquote>
-          <blockquote class="quote">
-            <p class="quote__text">« Il valore vero? Ci hanno detto anche cosa NON automatizzare. Metà delle idee che avevamo non stavano in piedi. »</p>
-            <footer>
-              <cite>NOME COGNOME</cite>
-              <span>TITOLARE · STUDIO PROFESSIONALE</span>
-            </footer>
-          </blockquote>
-          <blockquote class="quote">
-            <p class="quote__text">« Formazione concreta, zero fuffa. Il team ha smesso di avere paura dell'AI e ha iniziato a usarla ogni giorno. »</p>
-            <footer>
-              <cite>NOME COGNOME</cite>
-              <span>HR MANAGER · AZIENDA RETAIL</span>
-            </footer>
-          </blockquote>
-        </div>
-        <div class="quotes__nav">
-          <button id="quotePrev" aria-label="Testimonianza precedente">←</button>
-          <p class="quotes__count"><span id="quoteIndex">01</span> / 03</p>
-          <button id="quoteNext" aria-label="Testimonianza successiva">→</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════ INSIGHTS ═══════════ -->
-    <section class="blog" id="insights">
-      <div class="section-head reveal">
-        <h2 class="section-title">Dal laboratorio</h2>
-        <p class="section-tag">{ idee, guide e casi in corso }</p>
-      </div>
-
-      <div class="blog__grid">
-        <a href="#" class="blog-card reveal">
-          <div class="img-slot">
-            <span class="img-slot__label">IMMAGINE · ARTICOLO 01 · 16:9</span>
-          </div>
-          <p class="blog-card__date">{ LUGLIO 2026 }</p>
-          <h3>AI Act: cosa cambia davvero per le PMI italiane</h3>
-          <p class="blog-card__excerpt">Scadenze, obblighi e falsi miti del regolamento europeo — spiegati senza legalese.</p>
-        </a>
-        <a href="#" class="blog-card reveal">
-          <div class="img-slot">
-            <span class="img-slot__label">IMMAGINE · ARTICOLO 02 · 16:9</span>
-          </div>
-          <p class="blog-card__date">{ GIUGNO 2026 }</p>
-          <h3>RAG spiegato al tuo direttore operativo</h3>
-          <p class="blog-card__excerpt">Come l'AI può rispondere usando i documenti della tua azienda — e citare le fonti.</p>
-        </a>
-        <a href="#" class="blog-card reveal">
-          <div class="img-slot">
-            <span class="img-slot__label">IMMAGINE · ARTICOLO 03 · 16:9</span>
-          </div>
-          <p class="blog-card__date">{ GIUGNO 2026 }</p>
-          <h3>Quanto costa (davvero) un progetto AI</h3>
-          <p class="blog-card__excerpt">Licenze, sviluppo, consumi: la struttura dei costi vera, voce per voce.</p>
-        </a>
       </div>
     </section>
 
@@ -592,6 +553,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=10"></script>
+  <script src="js/main.js?v=11"></script>
 </body>
 </html>

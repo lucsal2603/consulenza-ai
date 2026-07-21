@@ -1311,45 +1311,44 @@ section { position: relative; }
 .about.closing .about__shutter--left,
 .about.closing .about__shutter--right { transform: translate(0, 0); }
 
-/* testata della sezione successiva: appare sullo schermo appena chiuso */
+/* anteprima della CTA finale: appare centrata sullo schermo appena chiuso,
+   nello stesso stile della sezione contatti */
 .about__next {
   position: absolute;
-  left: var(--pad-x);
-  right: var(--pad-x);
-  top: clamp(84px, 13vh, 130px);
+  inset: 0;
   z-index: 6;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  border-top: 1px solid rgba(239, 235, 226, 0.22);
-  padding-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+  padding: 0 var(--pad-x);
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 0.7s var(--ease-out) 0.4s, transform 0.7s var(--ease-out) 0.4s;
+  transform: translateY(34px);
+  transition: opacity 0.75s var(--ease-out) 0.45s, transform 0.75s var(--ease-out) 0.45s;
   pointer-events: none;
-}
-.about__next-title {
-  font-size: clamp(2.3rem, 5vw, 4.2rem);
-  font-weight: 640;
-  letter-spacing: -0.03em;
-  line-height: 1.02;
-  color: var(--bone);
 }
 .about__next-tag {
   font-family: var(--font-mono);
   font-size: 13px;
   font-style: italic;
-  letter-spacing: 0.04em;
-  color: rgba(239, 235, 226, 0.5);
+  letter-spacing: 0.06em;
+  color: var(--lime);
+}
+.about__next-title {
+  font-size: clamp(2.8rem, 7vw, 6.4rem);
+  font-weight: 640;
+  letter-spacing: -0.035em;
+  line-height: 1.0;
+  color: var(--bone);
 }
 .about.st-4 .about__next { opacity: 1; transform: none; }
 
-/* su desktop la testata vera di "Dicono di noi" è già mostrata dagli
-   otturatori: quella nella sezione resta solo per screen reader */
+/* su desktop tag e titolo della CTA sono già mostrati dagli otturatori:
+   nella sezione restano solo per screen reader */
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
-  .quotes .section-head {
+  .cta__tag, .cta__title {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -1360,80 +1359,11 @@ section { position: relative; }
     margin: -1px;
     border: 0;
   }
-  .quotes { padding-top: clamp(56px, 9vh, 110px); }
+  .cta { padding-top: clamp(90px, 16vh, 170px); padding-bottom: clamp(90px, 16vh, 170px); }
+  .cta__actions { margin-top: 0; }
 }
 .btn--ink { background: var(--ink); color: var(--bone); }
 .btn--ink:hover { background: var(--violet); color: var(--ink); }
-
-/* ─────────── testimonianze ─────────── */
-.quotes {
-  background: var(--ink);
-  padding: var(--pad-section) var(--pad-x);
-  border-radius: 28px 28px 0 0;
-}
-.quotes__viewport {
-  position: relative;
-  min-height: clamp(240px, 30vw, 300px);
-}
-.quote {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
-  pointer-events: none;
-}
-.quote.is-active { opacity: 1; transform: none; pointer-events: auto; }
-.quote__text {
-  font-size: clamp(1.45rem, 3vw, 2.4rem);
-  font-weight: 500;
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-  color: var(--bone);
-  max-width: 30ch;
-}
-.quote footer { margin-top: 30px; }
-.quote cite {
-  font-family: var(--font-mono);
-  font-style: normal;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--lime);
-  display: block;
-}
-.quote footer span {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: rgba(239, 235, 226, 0.45);
-  margin-top: 6px;
-  display: block;
-}
-.quotes__nav {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-top: 44px;
-}
-.quotes__nav button {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1px solid rgba(239, 235, 226, 0.3);
-  color: var(--bone);
-  font-size: 18px;
-  transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.16s var(--ease-out);
-}
-.quotes__nav button:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
-.quotes__nav button:active { transform: scale(0.94); }
-.quotes__count {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: rgba(239, 235, 226, 0.55);
-}
-.quotes__count span { color: var(--bone); }
 
 /* ─────────── blog ─────────── */
 .blog {
@@ -1606,7 +1536,6 @@ section { position: relative; }
   .why-row { grid-template-columns: 1fr; gap: 8px; }
   .why-row__num { font-size: 12px; }
   .why__stats { gap: 28px; }
-  .quotes__viewport { min-height: 340px; }
   .footer__top, .footer__bottom { flex-direction: column; align-items: flex-start; }
   /* percorsi: carosello orizzontale pinnato — si swipa a dx/sx e ogni carta si
      centra; scrollando in giù la sezione bianca dopo SALE a coprirla (sipario) */

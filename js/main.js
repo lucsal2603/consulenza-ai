@@ -372,29 +372,6 @@
   window.addEventListener('resize', () => scrollFX(), { passive: true });
   scrollFX();
 
-  /* ── slider testimonianze ── */
-  const quotes = document.querySelectorAll('.quote');
-  const idxLabel = document.getElementById('quoteIndex');
-  const prev = document.getElementById('quotePrev');
-  const next = document.getElementById('quoteNext');
-  if (quotes.length && prev && next) {
-    let current = 0;
-    let timer = null;
-    const show = (i) => {
-      current = (i + quotes.length) % quotes.length;
-      quotes.forEach((q, k) => q.classList.toggle('is-active', k === current));
-      idxLabel.textContent = String(current + 1).padStart(2, '0');
-    };
-    const restart = () => {
-      if (reduceMotion) return;
-      clearInterval(timer);
-      timer = setInterval(() => show(current + 1), 6500);
-    };
-    prev.addEventListener('click', () => { show(current - 1); restart(); });
-    next.addEventListener('click', () => { show(current + 1); restart(); });
-    restart();
-  }
-
   /* ── anno footer ── */
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
