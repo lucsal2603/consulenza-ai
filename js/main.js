@@ -206,6 +206,25 @@
   const panels = [...document.querySelectorAll('.service-panel')];
   const pathsSection = document.getElementById('percorsi');
   const deckCards = [...document.querySelectorAll('#pathsDeck .path-card')];
+  /* mobile: le carte dei percorsi entrano da destra quando il mazzo compare.
+     Il trigger è il contenitore (#pathsDeck), che non viene mai trasformato,
+     così lo scatto è sempre affidabile anche se le carte partono fuori schermo.
+     Su desktop la classe .cards-in non ha regole associate → nessun effetto. */
+  const pathsDeckEl = document.getElementById('pathsDeck');
+  if (pathsDeckEl) {
+    if ('IntersectionObserver' in window) {
+      const deckIO = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('cards-in');
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+      deckIO.observe(pathsDeckEl);
+    } else {
+      pathsDeckEl.classList.add('cards-in');
+    }
+  }
   const aboutSection = document.getElementById('chi-sono');
   const shutterL = document.querySelector('.about__shutter--left');
   const shutterR = document.querySelector('.about__shutter--right');
