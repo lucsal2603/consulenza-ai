@@ -206,6 +206,41 @@
   const panels = [...document.querySelectorAll('.service-panel')];
   const pathsSection = document.getElementById('percorsi');
   const deckCards = [...document.querySelectorAll('#pathsDeck .path-card')];
+  /* percorsi mobile: puntini del carosello — l'attivo diventa scuro e si allunga.
+     Costruiti da JS (uno per carta); click = scorri a quella carta centrandola. */
+  const dotsWrap = document.getElementById('pathsDots');
+  const deckEl = document.getElementById('pathsDeck');
+  if (dotsWrap && deckEl && deckCards.length) {
+    deckCards.forEach((card, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'paths__dot';
+      b.setAttribute('aria-label', `Vai al percorso ${i + 1}`);
+      b.addEventListener('click', () => {
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      dotsWrap.appendChild(b);
+    });
+    const dots = [...dotsWrap.children];
+    const syncDots = () => {
+      const deckRect = deckEl.getBoundingClientRect();
+      const mid = deckRect.left + deckRect.width / 2;
+      let best = 0, bestDist = Infinity;
+      deckCards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const d = Math.abs((r.left + r.width / 2) - mid);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === best));
+    };
+    let dotTick = false;
+    deckEl.addEventListener('scroll', () => {
+      if (dotTick) return;
+      dotTick = true;
+      requestAnimationFrame(() => { syncDots(); dotTick = false; });
+    }, { passive: true });
+    syncDots();
+  }
   const aboutSection = document.getElementById('chi-sono');
   const shutterL = document.querySelector('.about__shutter--left');
   const shutterR = document.querySelector('.about__shutter--right');

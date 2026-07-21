@@ -914,6 +914,9 @@ section { position: relative; }
 }
 .path-card:hover .btn__arrow { transform: translateX(5px); }
 
+/* puntini del carosello percorsi — visibili solo su mobile (vedi media query) */
+.paths__dots { display: none; }
+
 /* ─────────── tecnica ─────────── */
 .tech {
   background: var(--paper);
@@ -1575,6 +1578,17 @@ section { position: relative; }
   }
   .path-card:hover { transform: none; }
   .path-card h3 { margin-top: 18px; }
+  /* puntini: quello attivo diventa scuro e si allunga a pillola */
+  .paths__dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px; margin-top: 22px; padding-inline: var(--pad-x);
+  }
+  .paths__dot {
+    width: 8px; height: 8px; padding: 0; border: none; cursor: pointer;
+    border-radius: 99px; background: rgba(19, 16, 25, 0.25);
+    transition: width 0.35s var(--ease-out), background-color 0.35s var(--ease-out);
+  }
+  .paths__dot.is-active { width: 26px; background: var(--ink); }
 }
 
 @media (max-width: 560px) {
